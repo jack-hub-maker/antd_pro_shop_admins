@@ -1,3 +1,13 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0
+ * @Author: 
+ * @Date: 2021-10-12 09:56:49
+ * @LastEditors: YingJie Xing
+ * @LastEditTime: 2021-10-12 10:13:20
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\models\login.ts
+ * Copyright 2021 YingJie Xing, All Rights Reserved. 
+ */
 import { stringify } from 'querystring';
 import type { Reducer, Effect } from 'umi';
 import { history } from 'umi';
@@ -67,9 +77,9 @@ const Model: LoginModelType = {
     logout() {
       const { redirect } = getPageQuery();
       // Note: There may be security issues, please note
-      if (window.location.pathname !== '/user/login' && !redirect) {
+      if (window.location.pathname !== '/login' && !redirect) {
         history.replace({
-          pathname: '/user/login',
+          pathname: '/login',
           search: stringify({
             redirect: window.location.href,
           }),
