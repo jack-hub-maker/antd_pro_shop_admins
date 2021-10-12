@@ -1,3 +1,13 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0
+ * @Author: 
+ * @Date: 2021-10-12 09:56:49
+ * @LastEditors: YingJie Xing
+ * @LastEditTime: 2021-10-12 10:20:42
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\layouts\SecurityLayout.tsx
+ * Copyright 2021 YingJie Xing, All Rights Reserved. 
+ */
 import React from 'react';
 import { PageLoading } from '@ant-design/pro-layout';
 import type { ConnectProps } from 'umi';
@@ -45,8 +55,8 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
     if ((!isLogin && loading) || !isReady) {
       return <PageLoading />;
     }
-    if (!isLogin && window.location.pathname !== '/user/login') {
-      return <Redirect to={`/user/login?${queryString}`} />;
+    if (!isLogin && window.location.pathname !== '/login') {
+      return <Redirect to={`/login?${queryString}`} />;
     }
     return children;
   }

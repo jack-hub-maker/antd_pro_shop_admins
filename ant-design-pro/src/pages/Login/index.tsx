@@ -40,15 +40,15 @@ const LoginMessage: React.FC<{
 
 const Login: React.FC<LoginProps> = (props) => {
   const { userLogin = {}, submitting } = props;
-  const { status, type: loginType } = userLogin;
-  const [type, setType] = useState<string>('account');
+  const { status } = userLogin;
+  const [type, ] = useState<string>('account');
   const intl = useIntl();
 
   const handleSubmit = (values: LoginParamsType) => {
     const { dispatch } = props;
     dispatch({
       type: 'login/login',
-      payload: { ...values, type },
+      payload: { ...values },
     });
   };
   return (
@@ -68,11 +68,12 @@ const Login: React.FC<LoginProps> = (props) => {
           },
         }}
         onFinish={(values) => {
+          // console.log('values:',values);
           handleSubmit(values as LoginParamsType);
           return Promise.resolve();
         }}
       >
-        <Tabs activeKey={type} onChange={setType}>
+        <Tabs activeKey="account" >
           <Tabs.TabPane
             key="account"
             tab={intl.formatMessage({
@@ -80,44 +81,27 @@ const Login: React.FC<LoginProps> = (props) => {
               defaultMessage: 'Account password login',
             })}
           />
-          {/* <Tabs.TabPane
-            key="mobile"
-            tab={intl.formatMessage({
-              id: 'pages.login.phoneLogin.tab',
-              defaultMessage: 'Mobile phone number login',
-            })}
-          /> */}
+         
         </Tabs>
 
-        {status === 'error' && loginType === 'account' && !submitting && (
-          <LoginMessage
-            content={intl.formatMessage({
-              id: 'pages.login.accountLogin.errorMessage',
-              defaultMessage: 'Incorrect account or password（admin/ant.design)',
-            })}
-          />
-        )}
+
         {type === 'account' && (
           <>
             <ProFormText
-              name="userName"
+              name="email"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={intl.formatMessage({
-                id: 'pages.login.username.placeholder',
-                defaultMessage: 'Username: admin or user',
-              })}
+              placeholder='邮箱: super@a.com'
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.username.required"
-                      defaultMessage="Please enter user name!"
-                    />
-                  ),
+                  message: '请输入邮箱'
+                },
+                {
+                  type: 'email',
+                  message: '请输入正确的邮箱格式'
                 },
               ]}
             />
@@ -127,117 +111,23 @@ const Login: React.FC<LoginProps> = (props) => {
                 size: 'large',
                 prefix: <LockOutlined className={styles.prefixIcon} />,
               }}
-              placeholder={intl.formatMessage({
-                id: 'pages.login.password.placeholder',
-                defaultMessage: 'Password: ant.design',
-              })}
+              placeholder='密码: 123123'
               rules={[
                 {
                   required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.password.required"
-                      defaultMessage="Please enter password！"
-                    />
-                  ),
+                  message: '请输入密码'
                 },
               ]}
             />
           </>
         )}
 
-        {status === 'error' && loginType === 'mobile' && !submitting && (
+        {status === 'error' && !submitting && (
           <LoginMessage content="Verification code error" />
         )}
-        {type === 'mobile' && (
-          <>
-            <ProFormText
-              fieldProps={{
-                size: 'large',
-                prefix: <MobileOutlined className={styles.prefixIcon} />,
-              }}
-              name="mobile"
-              placeholder={intl.formatMessage({
-                id: 'pages.login.phoneNumber.placeholder',
-                defaultMessage: 'Phone number',
-              })}
-              rules={[
-                {
-                  required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.phoneNumber.required"
-                      defaultMessage="Please enter phone number!"
-                    />
-                  ),
-                },
-                {
-                  pattern: /^1\d{10}$/,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.phoneNumber.invalid"
-                      defaultMessage="Malformed phone number!"
-                    />
-                  ),
-                },
-              ]}
-            />
-            <ProFormCaptcha
-              fieldProps={{
-                size: 'large',
-                prefix: <MailOutlined className={styles.prefixIcon} />,
-              }}
-              captchaProps={{
-                size: 'large',
-              }}
-              placeholder={intl.formatMessage({
-                id: 'pages.login.captcha.placeholder',
-                defaultMessage: 'Please enter verification code',
-              })}
-              captchaTextRender={(timing, count) => {
-                if (timing) {
-                  return `${count} ${intl.formatMessage({
-                    id: 'pages.getCaptchaSecondText',
-                    defaultMessage: 'Get verification code',
-                  })}`;
-                }
-                return intl.formatMessage({
-                  id: 'pages.login.phoneLogin.getVerificationCode',
-                  defaultMessage: 'Get verification code',
-                });
-              }}
-              name="captcha"
-              rules={[
-                {
-                  required: true,
-                  message: (
-                    <FormattedMessage
-                      id="pages.login.captcha.required"
-                      defaultMessage="Please enter verification code！"
-                    />
-                  ),
-                },
-              ]}
-              onGetCaptcha={async (mobile) => {
-                const result = await getFakeCaptcha(mobile);
-                if (result === false) {
-                  return;
-                }
-                message.success(
-                  'Get the verification code successfully! The verification code is: 1234',
-                );
-              }}
-            />
-          </>
-        )}
+
        
       </ProForm>
-      {/* <Space className={styles.other}>
-        <FormattedMessage id="pages.login.loginWith" defaultMessage="Other login methods" />
-        <AlipayCircleOutlined className={styles.icon} />
-        <TaobaoCircleOutlined className={styles.icon} />
-        <WeiboCircleOutlined className={styles.icon} />
-      </Space> */}
     </div>
   );
 };

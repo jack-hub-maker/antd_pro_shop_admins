@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 10:13:20
+ * @LastEditTime: 2021-10-12 11:14:29
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\models\login.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -39,39 +39,46 @@ const Model: LoginModelType = {
   namespace: 'login',
 
   state: {
-    status: undefined,
   },
 
   effects: {
     *login({ payload }, { call, put }) {
+      //发送请求执行登录
       const response = yield call(fakeAccountLogin, payload);
-      yield put({
-        type: 'changeLoginStatus',
-        payload: response,
-      });
-      // Login successfully
-      if (response.status === 'ok') {
-        const urlParams = new URL(window.location.href);
-        const params = getPageQuery();
-        message.success('🎉 🎉 🎉  登录成功！');
-        let { redirect } = params as { redirect: string };
-        if (redirect) {
-          const redirectUrlParams = new URL(redirect);
-          if (redirectUrlParams.origin === urlParams.origin) {
-            redirect = redirect.substr(urlParams.origin.length);
-            if (window.routerBase !== '/') {
-              redirect = redirect.replace(window.routerBase, '/');
-            }
-            if (redirect.match(/^\/.*#/)) {
-              redirect = redirect.substr(redirect.indexOf('#') + 1);
-            }
-          } else {
-            window.location.href = '/';
-            return;
-          }
-        }
-        history.replace(redirect || '/');
-      }
+      console.log('response:', response);
+      if (response.status === undefined) {
+        yield put({
+          type: 'changeLoginStatus',
+          payload: response,
+        }); // Login successfully
+        
+        //跳转到首页
+        history.replace('/');
+      } 
+
+
+      // if (response.status === 'ok') {
+      //   const urlParams = new URL(window.location.href);
+      //   const params = getPageQuery();
+      //   message.success('🎉 🎉 🎉  登录成功！');
+      //   let { redirect } = params as { redirect: string };
+      //   if (redirect) {
+      //     const redirectUrlParams = new URL(redirect);
+      //     if (redirectUrlParams.origin === urlParams.origin) {
+      //       redirect = redirect.substr(urlParams.origin.length);
+      //       if (window.routerBase !== '/') {
+      //         redirect = redirect.replace(window.routerBase, '/');
+      //       }
+      //       if (redirect.match(/^\/.*#/)) {
+      //         redirect = redirect.substr(redirect.indexOf('#') + 1);
+      //       }
+      //     } else {
+      //       window.location.href = '/';
+      //       return;
+      //     }
+      //   }
+      //   history.replace(redirect || '/');
+      // }
     },
 
     logout() {
@@ -90,11 +97,13 @@ const Model: LoginModelType = {
 
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
+      // setAuthority(payload.access_token);
+      //将token存入locallstorage里 
+      localStorage.setItem('access_token', JSON.stringify(payload.access_token));
       return {
         ...state,
-        status: payload.status,
-        type: payload.type,
+        // status: payload.status,
+        // type: payload.type,
       };
     },
   },

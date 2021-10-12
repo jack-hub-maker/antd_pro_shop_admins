@@ -2,10 +2,20 @@
  * @Descripttion: 
  * @version: 1.0
  * @Author: 
+ * @Date: 2021-10-12 09:56:49
+ * @LastEditors: YingJie Xing
+ * @LastEditTime: 2021-10-12 11:15:27
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\utils\request.ts
+ * Copyright 2021 YingJie Xing, All Rights Reserved. 
+ */
+/*
+ * @Descripttion: 
+ * @version: 1.0
+ * @Author: 
  * @Date: 2021-10-11 15:44:30
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-11 21:10:32
- * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/utils/request.ts
+ * @LastEditTime: 2021-10-12 10:54:34
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\utils\request.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 /** Request 网络请求工具 更详细的 api 文档: https://github.com/umijs/umi-request */
@@ -74,13 +84,13 @@ const errorHandler = async (error: { response: Response }): Response => {
 const request = extend({
   errorHandler, // default error handling
   credentials: 'include', // Does the default request bring cookies
-  // prefix:'/api'
+  prefix:'/api'//请求前缀
 });
 
 //请求拦截器，在请求之前加上header头
 request.interceptors.request.use((url, options) => {
   //获取token
-  const token = 'hello'
+  const token = localStorage.getItem('access_token') || ''
   //设置header头
   const headers = {
     Authorization: `Bearer ${token}`
