@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 11:15:27
+ * @LastEditTime: 2021-10-13 14:15:46
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\utils\request.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -93,7 +93,7 @@ request.interceptors.request.use((url, options) => {
   const token = localStorage.getItem('access_token') || ''
   //设置header头
   const headers = {
-    Authorization: `Bearer ${token}`
+    Authorization: `Bearer ${token.replace(/^\"|\"$/g,"")}`
   }
   return {
     url,

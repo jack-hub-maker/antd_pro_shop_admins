@@ -1,3 +1,13 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0
+ * @Author: 
+ * @Date: 2021-10-12 09:56:59
+ * @LastEditors: YingJie Xing
+ * @LastEditTime: 2021-10-13 14:57:01
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\locales\zh-CN\menu.ts
+ * Copyright 2021 YingJie Xing, All Rights Reserved. 
+ */
 export default {
   'menu.welcome': '欢迎',
   'menu.more-blocks': '更多区块',
@@ -7,7 +17,7 @@ export default {
   'menu.login': '登录',
   'menu.register': '注册',
   'menu.register.result': '注册结果',
-  'menu.dashboard': 'Dashboard',
+  'menu.dashboard': '统计面版',
   'menu.dashboard.analysis': '分析页',
   'menu.dashboard.monitor': '监控页',
   'menu.dashboard.workplace': '工作台',
@@ -49,4 +59,5 @@ export default {
   'menu.editor.flow': '流程编辑器',
   'menu.editor.mind': '脑图编辑器',
   'menu.editor.koni': '拓扑编辑器',
+  // 'menu.dashboard': '统计面版',
 };

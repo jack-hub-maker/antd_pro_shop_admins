@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 10:20:42
+ * @LastEditTime: 2021-10-13 14:16:36
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\layouts\SecurityLayout.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -47,7 +47,7 @@ class SecurityLayout extends React.Component<SecurityLayoutProps, SecurityLayout
     const { children, loading, currentUser } = this.props;
     // You can replace it to your authentication rule (such as check token exists)
     // You can replace it with your own login authentication rules (such as judging whether the token exists)
-    const isLogin = currentUser && currentUser.userid;
+    const isLogin = currentUser && currentUser.id;
     const queryString = stringify({
       redirect: window.location.href,
     });

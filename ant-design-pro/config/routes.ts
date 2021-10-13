@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-11 20:55:46
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 09:37:56
- * @FilePath: /antd_pro_shop_admins/ant-design-pro/config/routes.ts
+ * @LastEditTime: 2021-10-13 14:55:38
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\config\routes.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 export default [
@@ -35,8 +35,14 @@ export default [
             routes: [
               {
                 path: '/',
+                redirect:'/dashboard'
               },
-
+              {
+                path: '/dashboard',
+                name:'dashboard',
+                icon:'PieChartOutlined',
+                component: '@/pages/DashBoard',
+              },
               {
                 component: './404',
               },

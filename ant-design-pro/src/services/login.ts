@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 10:55:11
+ * @LastEditTime: 2021-10-13 14:41:24
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\services\login.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -17,6 +17,11 @@ export type LoginParamsType = {
   captcha: string;
 };
 
+/**
+ * 执行登陆 获取token
+ * @param params 
+ * @returns 
+ */
 export async function fakeAccountLogin(params: LoginParamsType) {
   return request('/auth/login', {
     method: 'POST',
@@ -24,6 +29,12 @@ export async function fakeAccountLogin(params: LoginParamsType) {
   });
 }
 
-export async function getFakeCaptcha(mobile: string) {
-  return request(`/api/login/captcha?mobile=${mobile}`);
+/**
+ * 退出登陆
+ * @param params 
+ * @returns 
+ */
+export async function logout() {
+  return request.post('/auth/logout');
 }
+

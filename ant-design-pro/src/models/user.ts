@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 13:23:39
+ * @LastEditTime: 2021-10-13 14:53:59
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\models\user.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -39,7 +39,6 @@ export type UserModelType = {
   };
   reducers: {
     saveCurrentUser: Reducer<UserModelState>;
-    changeNotifyCount: Reducer<UserModelState>;
   };
 };
 
@@ -60,10 +59,20 @@ const UserModel: UserModelType = {
     },
     //获取当前登陆用户数据
     *fetchCurrent(_, { call, put }) {
-      const response = yield call(queryCurrent);
+      //看localstroage里是否有用户信息
+      let userInfo =  JSON.parse(localStorage.getItem('userInfo'))
+      
+      if(!userInfo){
+        userInfo = yield call(queryCurrent);
+      }
+      
+
+      //把用户信息存入localstroage里
+      localStorage.setItem('userInfo', JSON.stringify(userInfo))
+
       yield put({
         type: 'saveCurrentUser',
-        payload: response,
+        payload: userInfo,
       });
     },
   },
@@ -75,21 +84,7 @@ const UserModel: UserModelType = {
         currentUser: action.payload || {},
       };
     },
-    changeNotifyCount(
-      state = {
-        currentUser: {},
-      },
-      action,
-    ) {
-      return {
-        ...state,
-        currentUser: {
-          ...state.currentUser,
-          notifyCount: action.payload.totalCount,
-          unreadCount: action.payload.unreadCount,
-        },
-      };
-    },
+
   },
 };
 

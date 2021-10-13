@@ -8,9 +8,9 @@ import {
   WeiboCircleOutlined,
 } from '@ant-design/icons';
 import { Alert, Space, message, Tabs } from 'antd';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
-import { useIntl, connect, FormattedMessage } from 'umi';
+import { useIntl, connect, history } from 'umi';
 import { getFakeCaptcha } from '@/services/login';
 import type { Dispatch } from 'umi';
 import type { StateType } from '@/models/login';
@@ -41,9 +41,17 @@ const LoginMessage: React.FC<{
 const Login: React.FC<LoginProps> = (props) => {
   const { userLogin = {}, submitting } = props;
   const { status } = userLogin;
-  const [type, ] = useState<string>('account');
+  const [type, setType] = useState<string>('account');
   const intl = useIntl();
 
+  useEffect(() => {
+    //如果已经登陆，直接去首页
+    const userInfo = localStorage.getItem('userInfo')
+    if (userInfo) {
+      history.replace('/')
+    }
+
+  }, [])
   const handleSubmit = (values: LoginParamsType) => {
     const { dispatch } = props;
     dispatch({
@@ -81,7 +89,7 @@ const Login: React.FC<LoginProps> = (props) => {
               defaultMessage: 'Account password login',
             })}
           />
-         
+
         </Tabs>
 
 
@@ -126,7 +134,7 @@ const Login: React.FC<LoginProps> = (props) => {
           <LoginMessage content="Verification code error" />
         )}
 
-       
+
       </ProForm>
     </div>
   );
