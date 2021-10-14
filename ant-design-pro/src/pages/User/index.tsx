@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-13 19:22:52
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-13 20:31:47
+ * @LastEditTime: 2021-10-14 12:34:32
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\User\index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -56,7 +56,7 @@ const columns: ProColumns<GithubIssueItem>[] = [
         render: (_, record: any) =>
             <Switch
                 checkedChildren="启用"
-                unCheckedChildren="禁用"
+                unCheckedChildren="禁用1"
                 defaultChecked={record.is_locked === 0}
                 onChange={(record: any) => {
                     // await lockUser(record.id)
@@ -69,7 +69,9 @@ const columns: ProColumns<GithubIssueItem>[] = [
         title: '创建时间',
         dataIndex: 'created_at',
         hideInSearch: true,
-    },
+    },  
+
+    
     {
         title: '操作',
         valueType: 'option',
