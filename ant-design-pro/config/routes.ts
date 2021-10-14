@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-11 20:55:46
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-13 14:55:38
+ * @LastEditTime: 2021-10-13 19:24:27
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\config\routes.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -42,6 +42,12 @@ export default [
                 name:'dashboard',
                 icon:'PieChartOutlined',
                 component: '@/pages/DashBoard',
+              },
+              {
+                path: '/user',
+                name:'user',
+                icon:'UserOutlined',
+                component: '@/pages/User',
               },
               {
                 component: './404',

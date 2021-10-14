@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-12 13:40:43
+ * @LastEditTime: 2021-10-13 20:20:58
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\services\user.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -20,4 +20,13 @@ export async function queryNotices(): Promise<any> {
 //获取当前登陆用户信息
 export async function queryCurrent(): Promise<any> {
   return request('/admin/user');
+}
+
+//获取用户列表
+export async function getUsers(params: any): Promise<any> {
+  return request('/admin/users', { params });
+}
+//禁用启用
+export async function lockUser(uid: any): Promise<any> {
+  return request.patch(`/admin/users/${uid}/lock`);
 }

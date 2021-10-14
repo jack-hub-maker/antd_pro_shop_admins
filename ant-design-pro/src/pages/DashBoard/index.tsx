@@ -4,36 +4,43 @@
  * @Author: 
  * @Date: 2021-10-13 14:50:45
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-13 16:27:49
+ * @LastEditTime: 2021-10-13 19:34:42
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\DashBoard\index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect } from 'react'
 import { PageContainer } from '@ant-design/pro-layout';
-import { Card, Row, Col, Space } from 'antd';
+import { Card, Row, Col } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined, RightOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { fetchDashboard } from '@/services/dashboard'
-
 import ProCard, { StatisticCard } from '@ant-design/pro-card';
 import RcResizeObserver from 'rc-resize-observer';
 const { Statistic } = StatisticCard;
 
-type dataType = {
-    users_count: string;
-    goods_count: string;
-    order_count: string;
+const divStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+}
+const imgStyle = {
+    display: 'block',
+    width: 42,
+    height: 42,
 };
-
 const DashBoard = () => {
     const [data, setData] = useState<any>({})
     const [responsive, setResponsive] = useState(false);
 
-    useEffect(async () => {
+    useEffect(() => {
+        getfetchDashboard()
+    }, [])
+
+    const getfetchDashboard = async () => {
         //发送请求获取统计数据
         const res = await fetchDashboard()
         setData(res)
+    }
 
-    }, [])
     return (
         <PageContainer>
             <Card>
@@ -43,6 +50,14 @@ const DashBoard = () => {
                             <Statistic
                                 title="用户数"
                                 value={data.users_count}
+                                style={divStyle}
+                                icon={(
+                                    <img
+                                        style={imgStyle}
+                                        src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*-jVKQJgA1UgAAAAAAAAAAABkARQnAQ"
+                                        alt="icon"
+                                    />
+                                )}
                                 precision={0}
                                 valueStyle={{ color: '#3f8600' }}
                                 prefix={<ArrowUpOutlined />}
@@ -55,6 +70,14 @@ const DashBoard = () => {
                             <Statistic
                                 title="商品数"
                                 value={data.goods_count}
+                                style={divStyle}
+                                icon={(
+                                    <img
+                                        style={imgStyle}
+                                        src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*dr_0RKvVzVwAAAAAAAAAAABkARQnAQ"
+                                        alt="icon"
+                                    />
+                                )}
                                 precision={0}
                                 valueStyle={{ color: '#cf1322' }}
                                 prefix={<ArrowDownOutlined />}
@@ -67,6 +90,14 @@ const DashBoard = () => {
                             <Statistic
                                 title="订单数"
                                 value={data.order_count}
+                                style={divStyle}
+                                icon={(
+                                    <img
+                                        style={imgStyle}
+                                        src="https://gw.alipayobjects.com/mdn/rms_7bc6d8/afts/img/A*FPlYQoTNlBEAAAAAAAAAAABkARQnAQ"
+                                        alt="icon"
+                                    />
+                                )}
                                 precision={0}
                                 valueStyle={{ color: '#234abc' }}
                                 prefix={<ArrowDownOutlined />}
