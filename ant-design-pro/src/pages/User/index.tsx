@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-13 19:22:52
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-14 13:11:35
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\User\index.tsx
+ * @LastEditTime: 2021-10-14 13:46:31
+ * @FilePath: /flowers/antd_pro_shop_admins/ant-design-pro/src/pages/User/index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
@@ -60,8 +60,7 @@ const columns: ProColumns<GithubIssueItem>[] = [
                 defaultChecked={record.is_locked === 0}
                 onChange={async () => {
                     await lockUser(record.id)
-                    //console.log(record.id);
-
+                    console.log(record.id);
                 }}
             />
     },
