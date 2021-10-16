@@ -50,6 +50,12 @@ export default [
                 component: '@/pages/User',
               },
               {
+                path: '/goods',
+                name:'goods',
+                icon:'ShoppingOutlined',
+                component: '@/pages/Goods',
+              },
+              {
                 component: './404',
               },
             ],

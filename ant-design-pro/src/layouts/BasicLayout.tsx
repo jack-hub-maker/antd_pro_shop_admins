@@ -56,7 +56,7 @@ const menuDataRender = (menuList: MenuDataItem[]): MenuDataItem[] =>
 
 const defaultFooterDom = (
   <DefaultFooter
-    copyright={`${new Date().getFullYear()} 折一束花`}
+    copyright={`${new Date().getFullYear()} 邢应杰`}
     links={null}
   />
 );
@@ -147,7 +147,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         return menuData || [];
       }}
       waterMarkProps={{
-        content: 'Ant Design Pro',
+        content: '折一束花',
         fontColor: 'rgba(24,144,255,0.15)',
       }}
     >

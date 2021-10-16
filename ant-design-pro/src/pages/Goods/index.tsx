@@ -11,11 +11,11 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Card, Form, Modal, Button, Avatar, Switch, message } from 'antd';
+import { Card, Form, Modal, Button, Image, Switch, message } from 'antd';
 import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
-import { getUsers, lockUser } from '@/services/user'
+import { getGoods, isOn, isRecommend } from '@/services/goods'
 // import Create from './components/Create'
 import CreateOrEdit from './components/CreateOrEdit'
 type GithubIssueItem = {
@@ -40,34 +40,77 @@ const index = () => {
     const [editId, setEditId] = useState(undefined);
     const columns: ProColumns<GithubIssueItem>[] = [
         {
-            title: '头像',
-            dataIndex: 'avatar_url',
+            title: '商品图',
+            dataIndex: 'cover_url',
             hideInSearch: true,
             render: (_, record: any) => (
-                <Avatar src={record.avatar_url} size={32} icon={<UserOutlined />} />
+                <Image
+                    src={record.cover_url}
+                    width={64}
+                    placeholder={
+                        <Image
+                            preview={false}
+                            src={record.cover_url}
+                            width={200}
+                        />
+                    }
+                />
             )
         },
         {
-            title: '姓名',
-            dataIndex: 'name',
+            title: '标题',
+            dataIndex: 'title',
         },
         {
-            title: '邮箱',
-            dataIndex: 'email',
-        },
-        {
-            title: '是否禁用',
-            dataIndex: 'is_locked',
+            title: '价格',
+            dataIndex: 'price',
             hideInSearch: true,
+        },
+        {
+            title: '库存',
+            dataIndex: 'stock',
+            hideInSearch: true,
+        },
+        {
+            title: '销量',
+            dataIndex: 'sales',
+            hideInSearch: true,
+        },
+        {
+            title: '是否上架',
+            dataIndex: 'is_on',
             render: (_, record: any) =>
                 <Switch
-                    checkedChildren="启用"
-                    unCheckedChildren="禁用"
-                    defaultChecked={record.is_locked === 0}
+                    checkedChildren="已上架"
+                    unCheckedChildren="未上架"
+                    defaultChecked={record.is_on === 1}
                     onChange={() => {
-                        handleLockUser(record)
+                        handleIsOn(record)
                     }}
-                />
+                />,
+            valueType: 'radioButton',
+            valueEnum: {
+                1: { text: '已上架' },
+                0: { text: '未上架' },
+            }
+        },
+        {
+            title: '是否推荐',
+            dataIndex: 'is_recommend',
+            render: (_, record: any) =>
+                <Switch
+                    checkedChildren="已推荐"
+                    unCheckedChildren="未推荐"
+                    defaultChecked={record.is_recommend === 1}
+                    onChange={() => {
+                        handleIsRecommend(record)
+                    }}
+                />,
+            valueType: 'radioButton',
+            valueEnum: {
+                1: { text: '已推荐' },
+                0: { text: '未推荐' },
+            }
         },
         {
             title: '创建时间',
@@ -91,9 +134,17 @@ const index = () => {
             ],
         },
     ];
-    //启用禁用
-    const handleLockUser = async (record: any) => {
-        const res = await lockUser(record.id)
+    //上架下架商品
+    const handleIsOn = async (record: any) => {
+        const res = await isOn(record.id)
+        //console.log(res);
+        if (res.status === undefined) {
+            message.success('操作成功')
+        }
+    }
+    //推荐不推荐商品
+    const handleIsRecommend = async (record: any) => {
+        const res = await isRecommend(record.id)
         //console.log(res);
         if (res.status === undefined) {
             message.success('操作成功')
@@ -104,9 +155,9 @@ const index = () => {
         setEditId(editId)
         setIsModalVisible(show)
     }
-    //获取用户数据
+    //获取商品数据
     const getData = async (params: any) => {
-        const response = await getUsers(params)
+        const response = await getGoods(params)
         console.log(response);
         return {
             // 取response的records部分为列表数组数据
@@ -129,12 +180,13 @@ const index = () => {
                     rowKey="id"
                     search={{
                         labelWidth: 'auto',
+                        defaultCollapsed:false
                     }}
                     pagination={{
                         pageSize: 10,
                     }}
                     dateFormatter="string"
-                    headerTitle="用户列表"
+                    headerTitle="商品列表"
                     toolBarRender={() => [
                         <Button key="button"
                             icon={<PlusOutlined />}
