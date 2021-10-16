@@ -30,3 +30,16 @@ export async function getUsers(params: any): Promise<any> {
 export async function lockUser(uid: any): Promise<any> {
   return request.patch(`/admin/users/${uid}/lock`);
 }
+//添加用户
+export async function addUser(params: any): Promise<any> {
+  return request.post('/admin/users',{params});
+}
+//编辑用户信息
+export async function showUser(editId: any): Promise<any> {
+  return request(`/admin/users/${editId}`);
+}
+
+//更新用户
+export async function updateUser(uid: any,params:any): Promise<any> {
+  return request.put(`/admin/users/${uid}`,{params});
+}
