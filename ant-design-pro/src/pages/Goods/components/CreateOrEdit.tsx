@@ -10,62 +10,83 @@
  */
 import React, { useRef, useState, useEffect } from 'react'
 import ProForm, { ProFormText, ProFormTextArea, ProFormDigit, ProFormUploadButton } from '@ant-design/pro-form';
-import { Form, Modal, message, Skeleton } from 'antd';
+import { Form, Modal, Upload, message, Skeleton, Cascader, Button } from 'antd';
 import { addUser, updateUser, showUser } from '@/services/user'
+import { getCategory } from '@/services/category'
 import { FormInstance } from 'antd/es/form'
-
+import { UploadOutlined } from '@ant-design/icons';
+import { labeledStatement } from '@babel/types';
+import AliyunOSSUpload from '@/components/AliyunOSSUpload'
 const CreateOrEdit = (props: any) => {
     const [initialValues, setInitialValues] = useState({})
+    const [options, setOptions] = useState([])
+
+    //定义form实例用来操作表单
+    const [formObj] = ProForm.useForm()
+    //设置表单的值
+    // formObj.setFieldsValue({ fieldName: 'value' })
+
     const { isModalVisible } = props
     const { isShowModal } = props
     const { actionRef } = props
     const { editId } = props
+
     const title = editId === undefined ? '添加商品' : '编辑商品'
     const formRef = React.createRef<FormInstance>();
-
-    console.log("editId:", editId);
+    // console.log("editId:", editId);
     useEffect(() => {
+        getCategorys()
         if (editId !== undefined) {
             getshowUser()
         }
     }, [editId])
+
+    //请求分类数据
+    const getCategorys = (async () => {
+        const res = await getCategory()
+        if (res.status === undefined) setOptions(res)
+
+    })
     const getshowUser = (async () => {
         console.log("执行次数:");
         const res = await showUser(editId)
         console.log("res:", res);
-        // setInitialValues({
-        //     name: res.name,
-        //     email: res.email,
-        // })
         formRef.current?.setFieldsValue({
             name: res.name,
             email: res.email
         })
         setInitialValues(res)
     })
-    const createUser = async (values: any) => {
+    //文件上传成功后设置cover字段的value
+    const setCoverKey = (fileKey: any) => {
+        formObj.setFieldsValue({ 'cover': fileKey })
+    }
+    //表单提交
+    const handleSubmit = async (values: any) => {
         console.log(values);
         // message.success('提交成功');
-        if (title == '添加商品') {
-            const response = await addUser(values)
-            if (response.status === undefined) {
-                message.success('添加成功')
-                //刷新表格数据
-                actionRef.current?.reload();
-                isShowModal(false)
-            }
-        } else {
-            const response = await updateUser(editId, values)
-            if (response.status === undefined) {
-                message.success('修改成功')
-                //刷新表格数据
-                actionRef.current?.reload();
-                formRef.current?.resetFields();
-                isShowModal(false)
-            }
-        }
+        // if (title == '添加商品') {
+        //     const response = await addUser(values)
+        //     if (response.status === undefined) {
+        //         message.success('添加成功')
+        //         //刷新表格数据
+        //         actionRef.current?.reload();
+        //         isShowModal(false)
+        //     }
+        // } else {
+        //     const response = await updateUser(editId, values)
+        //     if (response.status === undefined) {
+        //         message.success('修改成功')
+        //         //刷新表格数据
+        //         actionRef.current?.reload();
+        //         formRef.current?.resetFields();
+        //         isShowModal(false)
+        //     }
+        // }
     }
-
+    const onChange = (value: any) => {
+        console.log(value);
+    }
     return (
         <Modal
             title={title}
@@ -73,37 +94,28 @@ const CreateOrEdit = (props: any) => {
             footer={null}
             onCancel={() => isShowModal(false)}
             destroyOnClose={true}
+            maskClosable={false}
         >
             {initialValues == undefined && editId !== undefined ?
                 <Skeleton avatar paragraph={{ rows: 4 }} /> :
                 <ProForm
-                    formRef={formRef}
+                    form={formObj}
                     // initialValues={initialValues}
-                    onFinish={(values) => createUser(values)
+                    onFinish={(values) => handleSubmit(values)
                     }
                 >
-                    <ProFormText
+                    <ProForm.Item
                         name="category_id"
                         label="分类"
-                        placeholder="请输入分类"
                         rules={[
                             {
-                                max: 20,
-                                required: true,
-                                message: '请输入分类',
+                                required: true, message: '请选择分类',
                             },
                         ]}
-                    />
-                    <ProFormText
-                        name="title"
-                        label="标题"
-                        placeholder="请输入标题"
-                        rules={[
-                            {
-                                required: true, message: '请输入标题',
-                            },
-                        ]}
-                    />
+                    >
+                        <Cascader fieldNames={{ label: 'name', value: 'id' }} options={options} onChange={onChange} placeholder="请选择分类" />
+                    </ProForm.Item>
+
                     <ProFormText
                         name="title"
                         label="商品名"
@@ -148,24 +160,30 @@ const CreateOrEdit = (props: any) => {
                             },
                         ]}
                     />
-                    <ProFormUploadButton
-                        label="上传"
+
+                    <ProForm.Item
+                        label="商品主图"
                         name="cover"
-                        action="upload.do"
                         rules={[
-                            {
-                                required: true, message: '请选择商品主图',
-                            },
+                            { required: true, message: '请上传商品主图', },
                         ]}
-                    />
+                    >
+                        <div>
+                            <AliyunOSSUpload
+                                accept="image/*"
+                                setCoverKey={setCoverKey}
+                            >
+                                <Button icon={<UploadOutlined />}>点击上传商品主图</Button>
+                            </AliyunOSSUpload>
+                        </div>
+                    </ProForm.Item>
+
                     <ProFormTextArea
                         name="details"
                         label="详情"
                         placeholder="请输入详情"
                         rules={[
-                            {
-                                required: true, message: '请输入详情',
-                            },
+                            { required: true, message: '请输入详情', },
                         ]}
                     />
                 </ProForm>
