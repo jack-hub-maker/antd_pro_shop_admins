@@ -60,15 +60,16 @@ const UserModel: UserModelType = {
     //获取当前登陆用户数据
     *fetchCurrent(_, { call, put }) {
       //看localstroage里是否有用户信息
-      let userInfo =  JSON.parse(localStorage.getItem('userInfo'))
-      
-      if(!userInfo){
-        userInfo = yield call(queryCurrent);
-      }
-      
+      let userInfo = JSON.parse(localStorage.getItem('userInfo'))
 
-      //把用户信息存入localstroage里
-      localStorage.setItem('userInfo', JSON.stringify(userInfo))
+      if (!userInfo) {
+        userInfo = yield call(queryCurrent);
+        //判断是否获取到用户信息
+        if (userInfo.id !== undefined) {
+          //把用户信息存入localstroage里
+          localStorage.setItem('userInfo', JSON.stringify(userInfo))
+        }
+      }
 
       yield put({
         type: 'saveCurrentUser',

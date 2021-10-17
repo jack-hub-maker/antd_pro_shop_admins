@@ -21,7 +21,7 @@
 /** Request 网络请求工具 更详细的 api 文档: https://github.com/umijs/umi-request */
 import { extend } from 'umi-request';
 import { message } from 'antd';
-
+import { history } from 'umi';
 const codeMessage: Record<number, string> = {
   200: '服务器成功返回请求的数据。',
   201: '新建或修改数据成功。',
@@ -61,9 +61,21 @@ const errorHandler = async (error: { response: Response }): Response => {
       }
       errorText += `[ ${errs} ]`
     }
+    //处理401的情况
+    if (status === 401) {
+      errorText += `[ ${result.message} ]`
+      //清空用户存储的本地缓存token和用户信息
+      //删除本地缓存和token
+      localStorage.removeItem('access_token')
+      localStorage.removeItem('userInfo')
+      
+
+      //跳转到登录页面重新登录
+      history.replace('/login')
+    }
     //处理400的情况
-    if (status === 422) {
-      errorText += `[ ${result.message} ]` 
+    if (status === 400) {
+      errorText += `[ ${result.message} ]`
     }
 
     // notification.error({
@@ -84,7 +96,7 @@ const errorHandler = async (error: { response: Response }): Response => {
 const request = extend({
   errorHandler, // default error handling
   credentials: 'include', // Does the default request bring cookies
-  prefix:'/api'//请求前缀
+  prefix: '/api'//请求前缀
 });
 
 //请求拦截器，在请求之前加上header头
@@ -93,7 +105,7 @@ request.interceptors.request.use((url, options) => {
   const token = localStorage.getItem('access_token') || ''
   //设置header头
   const headers = {
-    Authorization: `Bearer ${token.replace(/^\"|\"$/g,"")}`
+    Authorization: `Bearer ${token.replace(/^\"|\"$/g, "")}`
   }
   return {
     url,

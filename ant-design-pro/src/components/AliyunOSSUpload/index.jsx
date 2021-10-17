@@ -25,14 +25,19 @@ export default class AliyunOSSUpload extends React.Component {
 
     //文件上传过程中触发的回调函数，直到上传完成
     onChange = ({ file }) => {
-        console.log('Aliyun OSS:', file);
+        const { setCoverKey, insertImage } = this.props
         if (file.status === 'done') {
             //上传成功后把文件的key设置为表单某个字段的值
-            this.props.setCoverKey(file.key)
-            message.success('上传成功')
-        }
-    };
-
+            if (setCoverKey) {
+                setCoverKey(file.key)
+            }
+            //上传完成之后，如果需要url，那么返回url给父组件
+            if (insertImage) {
+                insertImage(file.url)
+                message.success('上传成功')
+            }
+        };
+    }
 
     //额外的上传参数
     getExtraData = file => {
@@ -55,7 +60,6 @@ export default class AliyunOSSUpload extends React.Component {
         }
 
         const dir = 'react/' //定义上传的目录
-
         const suffix = file.name.slice(file.name.lastIndexOf('.'));
         const filename = OSSData.dir + Date.now() + suffix;
         file.key = OSSData.dir + dir + filename; //在getExtraData中遇到的云存储的文件的key
@@ -65,7 +69,7 @@ export default class AliyunOSSUpload extends React.Component {
     };
 
     render() {
-        const { value, accept } = this.props;
+        const { value, accept, showUploadList } = this.props;
         const props = {
             accept: accept || '',
             name: 'file',
@@ -75,11 +79,11 @@ export default class AliyunOSSUpload extends React.Component {
             data: this.getExtraData,
             beforeUpload: this.beforeUpload,
             listType: 'picture',
-            maxCount: 1
+            maxCount: 1,
+            showUploadList: showUploadList
         };
         return (
             <Upload {...props}>
-                {/* <Button icon={<UploadOutlined />}>点击上传</Button> */}
                 {this.props.children}
             </Upload>
         );

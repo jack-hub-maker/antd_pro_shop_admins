@@ -22,10 +22,10 @@ export type LoginParamsType = {
  * @param params 
  * @returns 
  */
-export async function fakeAccountLogin(params: LoginParamsType) {
+export async function fakeAccountLogin(data: LoginParamsType) {
   return request('/auth/login', {
     method: 'POST',
-    data: params,
+    data,
   });
 }
 

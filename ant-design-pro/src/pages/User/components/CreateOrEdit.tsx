@@ -21,7 +21,8 @@ const CreateOrEdit = (props: any) => {
     const { actionRef } = props
     const { editId } = props
     const title = editId === undefined ? '添加用户' : '编辑用户'
-    const formRef = React.createRef<FormInstance>();
+    //定义form实例用来操作表单
+    const [formObj] = ProForm.useForm()
 
     console.log("editId:", editId);
     useEffect(() => {
@@ -29,15 +30,17 @@ const CreateOrEdit = (props: any) => {
             getshowUser()
         }
     }, [editId])
+    //发送请求，获取数据详情
     const getshowUser = (async () => {
         console.log("执行次数:");
         const res = await showUser(editId)
         console.log("res:", res);
+        console.log('formObj:::', formObj);
         // setInitialValues({
         //     name: res.name,
         //     email: res.email,
         // })
-        formRef.current?.setFieldsValue({
+        formObj.setFieldsValue({
             name: res.name,
             email: res.email
         })
@@ -60,7 +63,7 @@ const CreateOrEdit = (props: any) => {
                 message.success('修改成功')
                 //刷新表格数据
                 actionRef.current?.reload();
-                formRef.current?.resetFields();
+                formObj.resetFields();
                 isShowModal(false)
             }
         }
@@ -77,7 +80,7 @@ const CreateOrEdit = (props: any) => {
             {initialValues == undefined && editId !== undefined ?
                 <Skeleton avatar paragraph={{ rows: 4 }} /> :
                 <ProForm
-                    formRef={formRef}
+                    form={formObj}
                     // initialValues={initialValues}
                     onFinish={(values) => createUser(values)
                     }

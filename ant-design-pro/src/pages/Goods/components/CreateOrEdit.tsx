@@ -10,36 +10,45 @@
  */
 import React, { useRef, useState, useEffect } from 'react'
 import ProForm, { ProFormText, ProFormTextArea, ProFormDigit, ProFormUploadButton } from '@ant-design/pro-form';
-import { Form, Modal, Upload, message, Skeleton, Cascader, Button } from 'antd';
-import { addUser, updateUser, showUser } from '@/services/user'
+import { Form, Image, Modal, Upload, message, Skeleton, Cascader, Button } from 'antd';
 import { getCategory } from '@/services/category'
+import { addGoods, showGoods, updateGoods } from '@/services/goods'
 import { FormInstance } from 'antd/es/form'
 import { UploadOutlined } from '@ant-design/icons';
-import { labeledStatement } from '@babel/types';
 import AliyunOSSUpload from '@/components/AliyunOSSUpload'
+import Editor from '@/components/Editor'
+import { parseTwoDigitYear } from 'moment';
 const CreateOrEdit = (props: any) => {
     const [initialValues, setInitialValues] = useState({})
     const [options, setOptions] = useState([])
-
     //定义form实例用来操作表单
     const [formObj] = ProForm.useForm()
     //设置表单的值
     // formObj.setFieldsValue({ fieldName: 'value' })
-
     const { isModalVisible } = props
     const { isShowModal } = props
     const { actionRef } = props
     const { editId } = props
-
     const title = editId === undefined ? '添加商品' : '编辑商品'
-    const formRef = React.createRef<FormInstance>();
-    // console.log("editId:", editId);
+
     useEffect(() => {
         getCategorys()
         if (editId !== undefined) {
             getshowUser()
         }
     }, [editId])
+    //发送请求，获取数据详情
+    const getshowUser = (async () => {
+        const res = await showGoods(editId)
+        console.log("res:", res);
+        console.log('formObj:::', formObj);
+        //更改表单数据的值
+        const { pid, id } = res.category
+        const defaultCategory = pid === 0 ? [id] : [pid, id]
+        formObj.setFieldsValue({ ...res, category_id: defaultCategory })
+        // formObj.setFieldsValue(res)
+        setInitialValues(res)
+    })
 
     //请求分类数据
     const getCategorys = (async () => {
@@ -47,42 +56,32 @@ const CreateOrEdit = (props: any) => {
         if (res.status === undefined) setOptions(res)
 
     })
-    const getshowUser = (async () => {
-        console.log("执行次数:");
-        const res = await showUser(editId)
-        console.log("res:", res);
-        formRef.current?.setFieldsValue({
-            name: res.name,
-            email: res.email
-        })
-        setInitialValues(res)
-    })
+
     //文件上传成功后设置cover字段的value
     const setCoverKey = (fileKey: any) => {
         formObj.setFieldsValue({ 'cover': fileKey })
     }
+    //编辑输入内容后后设置details字段的value
+    const setDetails = (content: any) => {
+        formObj.setFieldsValue({ 'details': content })
+    }
     //表单提交
     const handleSubmit = async (values: any) => {
         console.log(values);
-        // message.success('提交成功');
-        // if (title == '添加商品') {
-        //     const response = await addUser(values)
-        //     if (response.status === undefined) {
-        //         message.success('添加成功')
-        //         //刷新表格数据
-        //         actionRef.current?.reload();
-        //         isShowModal(false)
-        //     }
-        // } else {
-        //     const response = await updateUser(editId, values)
-        //     if (response.status === undefined) {
-        //         message.success('修改成功')
-        //         //刷新表格数据
-        //         actionRef.current?.reload();
-        //         formRef.current?.resetFields();
-        //         isShowModal(false)
-        //     }
-        // }
+        // let response = {}
+        let response: { status?: string } = {};
+        if (title == '添加商品') {
+            response = await addGoods({ ...values, category_id: values.category_id[1] })
+        } else {
+            response = await updateGoods(editId, { ...values, category_id: values.category_id[1] })
+        }
+        if (response.status === undefined) {
+            message.success(`${title}成功`)
+            //刷新表格数据
+            actionRef.current?.reload();
+
+            isShowModal(false)
+        }
     }
     const onChange = (value: any) => {
         console.log(value);
@@ -100,7 +99,7 @@ const CreateOrEdit = (props: any) => {
                 <Skeleton avatar paragraph={{ rows: 4 }} /> :
                 <ProForm
                     form={formObj}
-                    // initialValues={initialValues}
+                    initialValues={initialValues}
                     onFinish={(values) => handleSubmit(values)
                     }
                 >
@@ -108,9 +107,7 @@ const CreateOrEdit = (props: any) => {
                         name="category_id"
                         label="分类"
                         rules={[
-                            {
-                                required: true, message: '请选择分类',
-                            },
+                            { required: true, message: '请选择分类', },
                         ]}
                     >
                         <Cascader fieldNames={{ label: 'name', value: 'id' }} options={options} onChange={onChange} placeholder="请选择分类" />
@@ -121,9 +118,7 @@ const CreateOrEdit = (props: any) => {
                         label="商品名"
                         placeholder="请输入商品名"
                         rules={[
-                            {
-                                required: true, message: '请输入商品名',
-                            },
+                            { required: true, message: '请输入商品名', },
                         ]}
                     />
                     <ProFormTextArea
@@ -161,6 +156,11 @@ const CreateOrEdit = (props: any) => {
                         ]}
                     />
 
+                    <ProFormText
+                        name='cover'
+                        hidden={true}
+                    />
+
                     <ProForm.Item
                         label="商品主图"
                         name="cover"
@@ -172,20 +172,35 @@ const CreateOrEdit = (props: any) => {
                             <AliyunOSSUpload
                                 accept="image/*"
                                 setCoverKey={setCoverKey}
+                                showUploadList={true}
                             >
                                 <Button icon={<UploadOutlined />}>点击上传商品主图</Button>
                             </AliyunOSSUpload>
+                            {
+                                initialValues === undefined || !initialValues?.cover_url ? '' :
+                                    <Image
+                                        width={200}
+                                        src={initialValues.cover_url}
+                                    />
+                            }
                         </div>
                     </ProForm.Item>
 
-                    <ProFormTextArea
+                    <ProForm.Item
                         name="details"
-                        label="详情"
-                        placeholder="请输入详情"
+                        label="商品详情"
                         rules={[
-                            { required: true, message: '请输入详情', },
+                            { required: true, message: '请输入商品详情', },
                         ]}
-                    />
+                    >
+                        {initialValues === undefined || !initialValues?.details ? '' :
+                            <Editor
+                                setDetails={setDetails}
+                                content={initialValues === undefined ? '' : initialValues.details}
+                            />
+                        }
+
+                    </ProForm.Item>
                 </ProForm>
             }
         </Modal>
