@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:59
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-13 19:25:05
+ * @LastEditTime: 2021-10-18 11:00:36
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\locales\zh-CN\menu.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -61,4 +61,6 @@ export default {
   'menu.editor.koni': '拓扑编辑器',
   'menu.user': '用户列表',
   'menu.goods': '商品列表',
+  'menu.category': '分类列表',
+  'menu.order': '订单列表',
 };
