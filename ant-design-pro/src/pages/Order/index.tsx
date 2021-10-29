@@ -4,18 +4,18 @@
  * @Author: 
  * @Date: 2021-10-18 11:01:04
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-18 11:03:59
+ * @LastEditTime: 2021-10-29 17:18:50
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\Order\index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
 import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Card, Form, Modal, Button, Avatar, Switch, message } from 'antd';
+import { Tag,Card, Form, Modal, Button, Avatar, Switch, message } from 'antd';
 import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
-import { getUsers, lockUser } from '@/services/user'
+import { getOrders } from '@/services/order'
 // import Create from './components/Create'
 import CreateOrEdit from './components/CreateOrEdit'
 type GithubIssueItem = {
@@ -40,41 +40,55 @@ const index = () => {
     const [editId, setEditId] = useState(undefined);
     const columns: ProColumns<GithubIssueItem>[] = [
         {
-            title: '头像',
-            dataIndex: 'avatar_url',
-            hideInSearch: true,
-            render: (_, record: any) => (
-                <Avatar src={record.avatar_url} size={32} icon={<UserOutlined />} />
-            )
-        },
-        {
-            title: '姓名',
-            dataIndex: 'name',
-        },
-        {
-            title: '邮箱',
-            dataIndex: 'email',
-        },
-        {
-            title: '是否禁用',
-            dataIndex: 'is_locked',
-            hideInSearch: true,
-            render: (_, record: any) =>
-                <Switch
-                    checkedChildren="启用"
-                    unCheckedChildren="禁用"
-                    defaultChecked={record.is_locked === 0}
-                    onChange={() => {
-                        handleLockUser(record)
-                    }}
-                />
-        },
-        {
-            title: '创建时间',
-            dataIndex: 'created_at',
-            hideInSearch: true,
+            title: '单号',
+            dataIndex: 'order_no',
         },
 
+        {
+            title: '创建者',
+            dataIndex: 'user_id',
+            hideInSearch: true,
+        },
+        {
+            title: '总价',
+            dataIndex: 'amount',
+            hideInSearch: true,
+        },
+        {
+            title: '状态',
+            dataIndex: 'status',
+            // hideInSearch: true,
+            valueEnum: {
+                1: { text: '下单' ,status: 'Processing',},
+                2: { text: '支付' ,status: 'Processing',},
+                3: { text: '发货' ,status: 'Success',},
+                4: { text: '收货' ,status: 'Success',},
+                5: { text: '过期' ,status: 'Error',},
+            },
+            // render:(_, record: any) =>[
+            //     record.status==1?<Tag color="blue">下单</Tag>:''
+            // ]
+        },
+        {
+            title: '收货地址',
+            dataIndex: 'address_id',
+            hideInSearch: true,
+        },
+        {
+            title: '支付时间',
+            dataIndex: 'pay_time',
+            hideInSearch: true,
+        },
+        {
+            title: '支付类型',
+            dataIndex: 'pay_type',
+            hideInSearch: true,
+        },
+        {
+            title: '支付流水号',
+            dataIndex: 'trade_no',
+            hideInSearch: true,
+        },
 
         {
             title: '操作',
@@ -86,7 +100,7 @@ const index = () => {
                         isShowModal(true, record.id)
                     }}
                 >
-                    编辑
+                    详情
                 </a>
             ],
         },
@@ -101,12 +115,12 @@ const index = () => {
     }
     //控制模态框显示隐藏
     const isShowModal = (show: boolean, editId: any) => {
-        setEditId(editId)
-        setIsModalVisible(show)
+        // setEditId(editId)
+        // setIsModalVisible(show)
     }
     //获取用户数据
     const getData = async (params: any) => {
-        const response = await getUsers(params)
+        const response = await getOrders(params)
         console.log(response);
         return {
             // 取response的records部分为列表数组数据
@@ -135,14 +149,7 @@ const index = () => {
                     }}
                     dateFormatter="string"
                     headerTitle="用户列表"
-                    toolBarRender={() => [
-                        <Button key="button"
-                            icon={<PlusOutlined />}
-                            type="primary"
-                            onClick={() => isShowModal(true)}>
-                            新建
-                        </Button>
-                    ]}
+                    toolBarRender={() => []}
                 />
 
                 {!isModalVisible ? '' :

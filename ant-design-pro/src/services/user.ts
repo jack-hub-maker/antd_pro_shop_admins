@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-13 20:20:58
+ * @LastEditTime: 2021-10-28 15:52:53
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\services\user.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -42,4 +42,9 @@ export async function showUser(editId: any): Promise<any> {
 //更新用户
 export async function updateUser(uid: any,data:any): Promise<any> {
   return request.put(`/admin/users/${uid}`,{data});
+}
+
+//用户头像
+export async function updateAvatar(data:any): Promise<any> {
+  return request.put(`/user/avatar`,{data});
 }

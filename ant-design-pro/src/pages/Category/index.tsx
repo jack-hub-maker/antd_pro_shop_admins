@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-18 10:59:48
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-18 13:10:11
+ * @LastEditTime: 2021-10-29 17:20:11
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\Category\index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -64,8 +64,8 @@ const index = () => {
     ];
     //控制模态框显示隐藏
     const isShowModal = (show: boolean, editId: any) => {
-        setEditId(editId)
-        setIsModalVisible(show)
+        // setEditId(editId)
+        // setIsModalVisible(show)
     }
     //获取用户数据
     const getData = async (params: any) => {

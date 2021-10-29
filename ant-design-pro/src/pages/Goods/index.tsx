@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-13 19:22:52
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-15 16:08:48
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\User\index.tsx
+ * @LastEditTime: 2021-10-28 15:38:21
+ * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\Goods\index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
@@ -151,7 +151,7 @@ const index = () => {
         }
     }
     //控制模态框显示隐藏
-    const isShowModal = (show: boolean, editId: any) => {
+    const isShowModal = (show: boolean, editId?: any) => {
         setEditId(editId)
         setIsModalVisible(show)
     }

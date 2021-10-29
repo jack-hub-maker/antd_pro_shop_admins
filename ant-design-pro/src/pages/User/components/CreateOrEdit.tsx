@@ -4,16 +4,17 @@
  * @Author: 
  * @Date: 2021-10-15 13:37:27
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-15 16:10:46
+ * @LastEditTime: 2021-10-28 16:00:55
  * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\User\components\CreateOrEdit.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useRef, useState, useEffect } from 'react'
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Form, Modal, message, Skeleton } from 'antd';
-import { addUser, updateUser, showUser } from '@/services/user'
+import { Button,Image,Form, Modal, message, Skeleton } from 'antd';
+import { addUser, updateUser, showUser,updateAvatar } from '@/services/user'
 import { FormInstance } from 'antd/es/form'
-
+import { UploadOutlined } from '@ant-design/icons';
+import AliyunOSSUpload from '@/components/AliyunOSSUpload'
 const CreateOrEdit = (props: any) => {
     const [initialValues, setInitialValues] = useState({})
     const { isModalVisible } = props
@@ -42,7 +43,8 @@ const CreateOrEdit = (props: any) => {
         // })
         formObj.setFieldsValue({
             name: res.name,
-            email: res.email
+            email: res.email,
+            cover_url:res.cover_url
         })
         setInitialValues(res)
     })
@@ -57,6 +59,9 @@ const CreateOrEdit = (props: any) => {
                 actionRef.current?.reload();
                 isShowModal(false)
             }
+            const responses = await updateAvatar({avatar:values.cover_url})
+            console.log(responses);
+            
         } else {
             const response = await updateUser(editId, values)
             if (response.status === undefined) {
@@ -68,7 +73,10 @@ const CreateOrEdit = (props: any) => {
             }
         }
     }
-
+    //文件上传成功后设置cover字段的value
+    const setCoverKey = (fileKey: any) => {
+        formObj.setFieldsValue({ 'cover': fileKey })
+    }
     return (
         <Modal
             title={title}
@@ -81,7 +89,7 @@ const CreateOrEdit = (props: any) => {
                 <Skeleton avatar paragraph={{ rows: 4 }} /> :
                 <ProForm
                     form={formObj}
-                    // initialValues={initialValues}
+                    initialValues={initialValues}
                     onFinish={(values) => createUser(values)
                     }
                 >
@@ -126,6 +134,30 @@ const CreateOrEdit = (props: any) => {
                             ]}
                         /> : ''
                     }
+                     <ProForm.Item
+                        label="头像"
+                        name="cover"
+                        rules={[
+                            { required: true, message: '请上传头像', },
+                        ]}
+                    >
+                        <div>
+                            <AliyunOSSUpload
+                                accept="image/*"
+                                setCoverKey={setCoverKey}
+                                showUploadList={true}
+                            >
+                                <Button icon={<UploadOutlined />}>点击上传头像</Button>
+                            </AliyunOSSUpload>
+                            {
+                                initialValues === undefined || !initialValues?.cover_url ? '' :
+                                    <Image
+                                        width={200}
+                                        src={initialValues.cover_url}
+                                    />
+                            }
+                        </div>
+                    </ProForm.Item>
                 </ProForm>
             }
         </Modal>
