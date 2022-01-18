@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-28 15:52:53
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\services\user.ts
+ * @LastEditTime: 2022-01-18 15:35:52
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/services/user.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import request from '@/utils/request';
@@ -34,7 +34,7 @@ export async function lockUser(uid: any): Promise<any> {
 export async function addUser(data: any): Promise<any> {
   return request.post('/admin/users',{data});
 }
-//编辑用户信息
+//编辑获取用户信息
 export async function showUser(editId: any): Promise<any> {
   return request(`/admin/users/${editId}`);
 }

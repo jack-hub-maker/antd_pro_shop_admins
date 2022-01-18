@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-15 13:37:27
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-15 16:10:46
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\User\components\CreateOrEdit.tsx
+ * @LastEditTime: 2022-01-18 14:44:45
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Goods/components/CreateOrEdit.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useRef, useState, useEffect } from 'react'
@@ -98,6 +98,7 @@ const CreateOrEdit = (props: any) => {
             {initialValues == undefined && editId !== undefined ?
                 <Skeleton avatar paragraph={{ rows: 4 }} /> :
                 <ProForm
+                style={{textAlign:'center'}}
                     form={formObj}
                     initialValues={initialValues}
                     onFinish={(values) => handleSubmit(values)
@@ -110,7 +111,8 @@ const CreateOrEdit = (props: any) => {
                             { required: true, message: '请选择分类', },
                         ]}
                     >
-                        <Cascader fieldNames={{ label: 'name', value: 'id' }} options={options} onChange={onChange} placeholder="请选择分类" />
+                        <Cascader fieldNames={{ label: 'name', value: 'id' }} 
+                        options={options} onChange={onChange} placeholder="请选择分类" />
                     </ProForm.Item>
 
                     <ProFormText
@@ -174,7 +176,7 @@ const CreateOrEdit = (props: any) => {
                                 setCoverKey={setCoverKey}
                                 showUploadList={true}
                             >
-                                <Button icon={<UploadOutlined />}>点击上传商品主图</Button>
+                                <Button style={{textAlign:"justify"}} icon={<UploadOutlined />}>点击上传商品主图</Button>
                             </AliyunOSSUpload>
                             {
                                 initialValues === undefined || !initialValues?.cover_url ? '' :

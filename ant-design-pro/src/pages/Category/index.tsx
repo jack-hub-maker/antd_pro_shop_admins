@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-18 10:59:48
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-29 17:20:11
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\Category\index.tsx
+ * @LastEditTime: 2022-01-18 16:44:42
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Category/index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
@@ -16,7 +16,7 @@ import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons'
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { getUsers, lockUser } from '@/services/user'
-import { getCategory } from '@/services/category'
+import { getCategory ,isStatus} from '@/services/category'
 // import Create from './components/Create'
 import CreateOrEdit from './components/CreateOrEdit'
 type GithubIssueItem = {
@@ -45,7 +45,25 @@ const index = () => {
             dataIndex: 'name',
             hideInSearch: true
         },
-
+        {
+            title: '是否禁用',
+            dataIndex: 'status',
+            hideInSearch: true,
+            render: (_, record: any) =>
+                <Switch
+                    checkedChildren="未禁用"
+                    unCheckedChildren="禁用"
+                    defaultChecked={record.status === 1}
+                    onChange={() => {
+                        handleIsStatus(record)
+                    }}
+                />,
+            valueType: 'radioButton',
+            valueEnum: {
+                1: { text: '未禁用' },
+                0: { text: '禁用' },
+            }
+        },
         {
             title: '操作',
             valueType: 'option',
@@ -62,10 +80,20 @@ const index = () => {
             ],
         },
     ];
+       //禁用分类
+       const handleIsStatus = async (record: any) => {
+        const res = await isStatus(record.id)
+        //console.log(res);
+        if (res.status === undefined) {
+            message.success('操作成功')
+        }
+    }
     //控制模态框显示隐藏
     const isShowModal = (show: boolean, editId: any) => {
-        // setEditId(editId)
-        // setIsModalVisible(show)
+        console.log('点击到editId:',editId);
+        
+        setEditId(editId)
+        setIsModalVisible(show)
     }
     //获取用户数据
     const getData = async (params: any) => {
@@ -104,7 +132,7 @@ const index = () => {
                         <Button key="button"
                             icon={<PlusOutlined />}
                             type="primary"
-                            onClick={() => isShowModal(true)}>
+                            onClick={() => isShowModal(true,null)}>
                             新建分类
                         </Button>
                     ]}

@@ -4,20 +4,20 @@
  * @Author: 
  * @Date: 2021-10-18 11:01:04
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-29 17:18:50
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\Order\index.tsx
+ * @LastEditTime: 2022-01-18 17:24:49
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
 import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Tag,Card, Form, Modal, Button, Avatar, Switch, message } from 'antd';
+import { Tag, Card, Form, Modal, Button, Avatar, Switch, message, Space } from 'antd';
 import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { getOrders } from '@/services/order'
-// import Create from './components/Create'
-import CreateOrEdit from './components/CreateOrEdit'
+import DetaiModal from './components/DetaiModal'
+import { MyButton, OptionButton } from '@/components/myComponents';
 type GithubIssueItem = {
     url: string;
     id: number;
@@ -37,7 +37,8 @@ type GithubIssueItem = {
 const index = () => {
     const actionRef = useRef<ActionType>();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [editId, setEditId] = useState(undefined);
+    const [chooseId, setchooseId] = useState('');
+
     const columns: ProColumns<GithubIssueItem>[] = [
         {
             title: '单号',
@@ -50,7 +51,7 @@ const index = () => {
             hideInSearch: true,
         },
         {
-            title: '总价',
+            title: '金额',
             dataIndex: 'amount',
             hideInSearch: true,
         },
@@ -59,11 +60,11 @@ const index = () => {
             dataIndex: 'status',
             // hideInSearch: true,
             valueEnum: {
-                1: { text: '下单' ,status: 'Processing',},
-                2: { text: '支付' ,status: 'Processing',},
-                3: { text: '发货' ,status: 'Success',},
-                4: { text: '收货' ,status: 'Success',},
-                5: { text: '过期' ,status: 'Error',},
+                1: { text: '下单', status: 'Processing', },
+                2: { text: '支付', status: 'Processing', },
+                3: { text: '发货', status: 'Success', },
+                4: { text: '收货', status: 'Success', },
+                5: { text: '过期', status: 'Error', },
             },
             // render:(_, record: any) =>[
             //     record.status==1?<Tag color="blue">下单</Tag>:''
@@ -76,7 +77,7 @@ const index = () => {
         },
         {
             title: '支付时间',
-            dataIndex: 'pay_time',
+            dataIndex: 'updated_at',
             hideInSearch: true,
         },
         {
@@ -86,22 +87,36 @@ const index = () => {
         },
         {
             title: '支付流水号',
-            dataIndex: 'trade_no',
+            dataIndex: 'address_id',
             hideInSearch: true,
         },
-
         {
             title: '操作',
             valueType: 'option',
+            key:'options',
+            width: 200,
             render: (text, record, _, action) => [
-                <a
-                    key="editable"
-                    onClick={() => {
-                        isShowModal(true, record.id)
-                    }}
-                >
-                    详情
-                </a>
+                <OptionButton key='a'>
+                    <MyButton
+                        text='详情'
+                        fileProps={{
+                            type: 'link',
+                            onClick: () => {
+                                setchooseId(record?.id)
+                                setIsModalVisible(true)
+                            }
+                        }}
+                    />
+                    <MyButton
+                        text='发货'
+                        fileProps={{
+                            type: 'link',
+                            onClick: () => {
+                                setIsModalVisible(true)
+                            }
+                        }}
+                    />
+                </OptionButton>
             ],
         },
     ];
@@ -148,17 +163,22 @@ const index = () => {
                         pageSize: 10,
                     }}
                     dateFormatter="string"
-                    headerTitle="用户列表"
+                    headerTitle="订单列表"
                     toolBarRender={() => []}
                 />
 
                 {!isModalVisible ? '' :
-                    <CreateOrEdit
-                        isModalVisible={isModalVisible}
-                        isShowModal={isShowModal}
-                        actionRef={actionRef}
-                        editId={editId}
+                      <Modal
+                      title='订单详情'
+                      visible={isModalVisible}
+                      footer={null}
+                      onCancel={() => setIsModalVisible(false)}
+                      destroyOnClose={true}
+                  >
+                   <DetaiModal
+                    id={chooseId}
                     />
+                    </Modal>
                 }
             </Card>
         </PageContainer>

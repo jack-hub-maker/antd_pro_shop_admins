@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-11 20:55:46
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-18 11:00:51
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\config\routes.ts
+ * @LastEditTime: 2021-11-13 15:44:26
+ * @FilePath: /11.4react/antd_pro_shop_admins/ant-design-pro/config/routes.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 export default [
@@ -66,6 +66,20 @@ export default [
                 name:'order',
                 icon:'ShoppingOutlined',
                 component: '@/pages/Order',
+              }, 
+              //测试页面1
+              {
+                path: '/ceshi1',
+                name:'ceshi1',
+                icon:'ShoppingOutlined',
+                component: '@/pages/ceshi1',
+              }, 
+              //测试页面2
+              {
+                path: '/ceshi2',
+                name:'ceshi2',
+                icon:'ShoppingOutlined',
+                component: '@/pages/ceshi2',
               }, 
               {
                 component: './404',
