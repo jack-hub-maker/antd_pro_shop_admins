@@ -4,7 +4,7 @@
  * @Author: YingJie Xing
  * @Date: 2021-10-29 16:42:51
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-18 17:30:15
+ * @LastEditTime: 2022-01-19 11:14:10
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/services/order.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -16,4 +16,8 @@ export async function getOrders(params: any): Promise<any> {
 //获取订单详情 inlude可以返回额外的数据， 多个使用 ， 分隔， 比如： include=goods,user,orderDetails
 export async function detailOrders(order: any): Promise<any> {
   return request(`/admin/orders/${order}?include=goods,orderDetails`);
+}
+//订单发货
+export async function openOrders(order: any, params: any): Promise<any> {
+  return request.patch(`/admin/orders/${order}/post`, { params });
 }

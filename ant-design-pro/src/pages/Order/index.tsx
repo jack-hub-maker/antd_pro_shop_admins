@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-18 11:01:04
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-18 17:24:49
+ * @LastEditTime: 2022-01-19 11:21:58
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -16,7 +16,8 @@ import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons'
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { getOrders } from '@/services/order'
-import DetaiModal from './components/DetaiModal'
+import DetailModal from './components/DetailModal'
+import OpenGoodsModal from './components/OpenGoodsModal'
 import { MyButton, OptionButton } from '@/components/myComponents';
 type GithubIssueItem = {
     url: string;
@@ -37,7 +38,9 @@ type GithubIssueItem = {
 const index = () => {
     const actionRef = useRef<ActionType>();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    const [chooseId, setchooseId] = useState('');
+    
+    const [isOpenVisible, setIsOpenVisible] = useState(false);
+    const [chooseRecord, setchooseRecord] = useState({});
 
     const columns: ProColumns<GithubIssueItem>[] = [
         {
@@ -60,11 +63,11 @@ const index = () => {
             dataIndex: 'status',
             // hideInSearch: true,
             valueEnum: {
-                1: { text: '下单', status: 'Processing', },
-                2: { text: '支付', status: 'Processing', },
-                3: { text: '发货', status: 'Success', },
-                4: { text: '收货', status: 'Success', },
-                5: { text: '过期', status: 'Error', },
+                1: { text: '已下单', status: 'Processing', },
+                2: { text: '已支付', status: 'Success', },
+                3: { text: '已发货', status: 'Success', },
+                4: { text: '已收货', status: 'Success', },
+                5: { text: '已过期', status: 'Error', },
             },
             // render:(_, record: any) =>[
             //     record.status==1?<Tag color="blue">下单</Tag>:''
@@ -93,7 +96,7 @@ const index = () => {
         {
             title: '操作',
             valueType: 'option',
-            key:'options',
+            key: 'options',
             width: 200,
             render: (text, record, _, action) => [
                 <OptionButton key='a'>
@@ -102,7 +105,7 @@ const index = () => {
                         fileProps={{
                             type: 'link',
                             onClick: () => {
-                                setchooseId(record?.id)
+                                setchooseRecord(record)
                                 setIsModalVisible(true)
                             }
                         }}
@@ -112,7 +115,8 @@ const index = () => {
                         fileProps={{
                             type: 'link',
                             onClick: () => {
-                                setIsModalVisible(true)
+                                setchooseRecord(record)
+                                setIsOpenVisible(true)
                             }
                         }}
                     />
@@ -129,9 +133,8 @@ const index = () => {
         }
     }
     //控制模态框显示隐藏
-    const isShowModal = (show: boolean, editId: any) => {
-        // setEditId(editId)
-        // setIsModalVisible(show)
+    const isShowModal = (show: boolean, editId?: any) => {
+        setIsOpenVisible(show)
     }
     //获取用户数据
     const getData = async (params: any) => {
@@ -168,17 +171,26 @@ const index = () => {
                 />
 
                 {!isModalVisible ? '' :
-                      <Modal
-                      title='订单详情'
-                      visible={isModalVisible}
-                      footer={null}
-                      onCancel={() => setIsModalVisible(false)}
-                      destroyOnClose={true}
-                  >
-                   <DetaiModal
-                    id={chooseId}
-                    />
+                    <Modal
+                        title='订单详情'
+                        visible={isModalVisible}
+                        footer={null}
+                        onCancel={() => setIsModalVisible(false)}
+                        destroyOnClose={true}
+                    >
+                        <DetailModal
+                            chooseRecord={chooseRecord}
+                        />
                     </Modal>
+                }
+
+                {!isOpenVisible ? '' :
+                     <OpenGoodsModal
+                     isOpenVisible={isOpenVisible}
+                     chooseRecord={chooseRecord}
+                     isShowModal={isShowModal}
+                     actionRef={actionRef}
+                 />
                 }
             </Card>
         </PageContainer>
