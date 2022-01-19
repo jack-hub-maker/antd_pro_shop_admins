@@ -2,10 +2,10 @@
  * @Descripttion: 
  * @version: 1.0
  * @Author: 
- * @Date: 2021-10-18 11:01:04
+ * @Date: 2021-11-13 15:43:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 13:32:51
- * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/index.tsx
+ * @LastEditTime: 2022-01-19 17:13:54
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Comment/comment.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
@@ -15,10 +15,8 @@ import { Tag, Card, Form, Modal, Button, Avatar, Switch, message, Space } from '
 import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
-import { getOrders } from '@/services/order'
-import DetailModal from './components/DetailModals'
-import OpenGoodsModal from './components/OpenGoodsModals'
-import { MyButton, OptionButton } from '@/components/myComponents';
+import { getComment } from '@/services/comment'
+import { MyButton, OptionButton,MyProTable } from '@/components/myComponents';
 type GithubIssueItem = {
     url: string;
     id: number;
@@ -35,7 +33,7 @@ type GithubIssueItem = {
     closed_at?: string;
 };
 
-const index = () => {
+const Comment = () => {
     const actionRef = useRef<ActionType>();
     const [isModalVisible, setIsModalVisible] = useState(false);
     
@@ -44,53 +42,38 @@ const index = () => {
 
     const columns: ProColumns<GithubIssueItem>[] = [
         {
-            title: '单号',
-            dataIndex: 'order_no',
-        },
-
-        {
             title: '创建者',
             dataIndex: 'user_id',
             hideInSearch: true,
         },
         {
-            title: '金额',
-            dataIndex: 'amount',
-            hideInSearch: true,
-        },
-        {
-            title: '状态',
-            dataIndex: 'status',
+            title: '级别',
+            dataIndex: 'rate',
             // hideInSearch: true,
             valueEnum: {
-                1: { text: '已下单', status: 'Processing', },
-                2: { text: '已支付', status: 'Success', },
-                3: { text: '已发货', status: 'Success', },
-                4: { text: '已收货', status: 'Success', },
-                5: { text: '已过期', status: 'Error', },
+                1: { text: '好评', status: 'Success', },
+                2: { text: '中评', status: 'Processing', },
+                3: { text: '差评', status: 'Error', },
             },
-            // render:(_, record: any) =>[
-            //     record.status==1?<Tag color="blue">下单</Tag>:''
-            // ]
         },
         {
-            title: '收货地址',
-            dataIndex: 'address_id',
+            title: '评价内容',
+            dataIndex: 'content',
             hideInSearch: true,
         },
         {
-            title: '支付时间',
+            title: '修改时间',
             dataIndex: 'updated_at',
             hideInSearch: true,
         },
         {
-            title: '支付类型',
-            dataIndex: 'pay_type',
+            title: '添加时间',
+            dataIndex: 'created_at',
             hideInSearch: true,
         },
         {
-            title: '支付流水号',
-            dataIndex: 'address_id',
+            title: '回复内容',
+            dataIndex: 'reply',
             hideInSearch: true,
         },
         {
@@ -110,35 +93,18 @@ const index = () => {
                             }
                         }}
                     />
-                    <MyButton
-                        text='发货'
-                        fileProps={{
-                            type: 'link',
-                            onClick: () => {
-                                setchooseRecord(record)
-                                setIsOpenVisible(true)
-                            }
-                        }}
-                    />
                 </OptionButton>
             ],
         },
     ];
     //启用禁用
-    const handleLockUser = async (record: any) => {
-        const res = await lockUser(record.id)
-        //console.log(res);
-        if (res.status === undefined) {
-            message.success('操作成功')
-        }
-    }
     //控制模态框显示隐藏
     const isShowModal = (show: boolean, editId?: any) => {
         setIsOpenVisible(show)
     }
     //获取用户数据
     const getData = async (params: any) => {
-        const response = await getOrders(params)
+        const response = await getComment(params)
         console.log(response);
         return {
             // 取response的records部分为列表数组数据
@@ -154,7 +120,7 @@ const index = () => {
     return (
         <PageContainer>
             <Card>
-                <ProTable<GithubIssueItem>
+                {/* <ProTable<GithubIssueItem>
                     columns={columns}
                     actionRef={actionRef}
                     request={(params, sort, filter) => getData(params)}
@@ -166,35 +132,24 @@ const index = () => {
                         pageSize: 10,
                     }}
                     dateFormatter="string"
-                    headerTitle="订单列表"
+                    headerTitle="评价列表"
                     toolBarRender={() => []}
-                />
-
-                {!isModalVisible ? '' :
-                    <Modal
-                        title='订单详情'
-                        visible={isModalVisible}
-                        footer={null}
-                        onCancel={() => setIsModalVisible(false)}
-                        destroyOnClose={true}
-                    >
-                        <DetailModal
-                            chooseRecord={chooseRecord}
-                        />
-                    </Modal>
-                }
-
-                {!isOpenVisible ? '' :
-                     <OpenGoodsModal
-                     isOpenVisible={isOpenVisible}
-                     chooseRecord={chooseRecord}
-                     isShowModal={isShowModal}
-                     actionRef={actionRef}
-                 />
-                }
+                /> */}
+            <MyProTable
+                  fileProps={{
+                    // bordered: true,
+                    actionRef,
+                    headerTitle:'评价列表',
+                    request: (params) => getData(params),
+                    columns,
+                    search: {
+                        labelWidth: 'auto',
+                    },
+                  }}
+            />
             </Card>
         </PageContainer>
     )
 }
 
-export default index
+export default Comment

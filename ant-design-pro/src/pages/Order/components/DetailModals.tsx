@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2022-01-18 17:14:06
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 10:57:13
- * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/components/DetaiModal.tsx
+ * @LastEditTime: 2022-01-19 13:34:38
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/components/DetailModals.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
 import React, { useRef, useState, useEffect } from 'react'
@@ -13,7 +13,7 @@ import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { List, Avatar, Form, Modal, message } from 'antd';
 import { detailOrders } from '@/services/order'
 // import ProList from '@ant-design/pro-list';
-const DetaiModal = (props: any) => {
+const DetaiModals = (props: any) => {
     const [detailData, setDetailData] = useState({})
     const getMyOrders = async () => {
         const res = await detailOrders(props?.chooseRecord?.id)
@@ -24,7 +24,7 @@ const DetaiModal = (props: any) => {
         console.log('props:', props);
         getMyOrders()
     }, [])
-    let imgDatas = []
+    const imgDatas:any[] = []
     detailData?.goods?.data.forEach((item: any) => {
         detailData?.orderDetails?.data.forEach((items: any) => {
             imgDatas.push({
@@ -54,4 +54,4 @@ const DetaiModal = (props: any) => {
     )
 }
 
-export default DetaiModal
+export default DetaiModals

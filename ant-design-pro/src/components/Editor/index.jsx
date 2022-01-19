@@ -10,17 +10,17 @@ export default class EditorDemo extends React.Component {
 
     state = {
         // 创建一个空的editorState作为初始值
-        // editorState: BraftEditor.createEditorState(this.props.content ?? null)
-        editorState: BraftEditor.createEditorState(null)
+        editorState: BraftEditor.createEditorState(this.props.content ?? null)
+        // editorState: BraftEditor.createEditorState(null)
     }
     async componentDidMount () {
         console.log('this.props:',this.props);
-        // 假设此处从服务端获取html格式的编辑器内容
-        const htmlContent = this.props.content
-        // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
-        this.setState({
-            editorState: BraftEditor.createEditorState(htmlContent)
-        })
+        // // 假设此处从服务端获取html格式的编辑器内容
+        // const htmlContent = this.props.content
+        // // 使用BraftEditor.createEditorState将html字符串转换为编辑器需要的editorStat
+        // this.setState({
+        //     editorState: BraftEditor.createEditorState(htmlContent)
+        // })
     }
     //编辑器内容改变时执行
     handleEditorChange = (editorState) => {

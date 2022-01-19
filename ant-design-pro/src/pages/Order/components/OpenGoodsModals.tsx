@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2022-01-19 10:56:41
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 11:20:40
- * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/components/openGoodsModal.tsx
+ * @LastEditTime: 2022-01-19 13:33:31
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Order/components/OpenGoodsModals.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
 import React, { useRef, useState, useEffect } from 'react'
@@ -14,7 +14,7 @@ import { Form, Image, Modal, Upload, message, Skeleton, Cascader, Button } from 
 import { addUser, updateUser, showUser } from '@/services/user'
 import { FormInstance } from 'antd/es/form'
 import { openOrders } from '@/services/order'
-const openGoodsModal = (props: any) => {
+const OpenGoodsModals = (props: any) => {
     const [initialValues, setInitialValues] = useState({})
     const { isOpenVisible } = props
     const { isShowModal } = props
@@ -94,4 +94,4 @@ const openGoodsModal = (props: any) => {
     )
 }
 
-export default openGoodsModal
+export default OpenGoodsModals

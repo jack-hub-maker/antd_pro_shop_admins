@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-15 13:37:27
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-18 14:44:45
+ * @LastEditTime: 2022-01-19 16:16:42
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Goods/components/CreateOrEdit.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -34,6 +34,7 @@ const CreateOrEdit = (props: any) => {
     useEffect(() => {
         getCategorys()
         if (editId !== undefined) {
+            console.log('请求了');
             getshowUser()
         }
     }, [editId])
@@ -98,7 +99,7 @@ const CreateOrEdit = (props: any) => {
             {initialValues == undefined && editId !== undefined ?
                 <Skeleton avatar paragraph={{ rows: 4 }} /> :
                 <ProForm
-                style={{textAlign:'center'}}
+                    style={{ textAlign: 'center' }}
                     form={formObj}
                     initialValues={initialValues}
                     onFinish={(values) => handleSubmit(values)
@@ -111,8 +112,8 @@ const CreateOrEdit = (props: any) => {
                             { required: true, message: '请选择分类', },
                         ]}
                     >
-                        <Cascader fieldNames={{ label: 'name', value: 'id' }} 
-                        options={options} onChange={onChange} placeholder="请选择分类" />
+                        <Cascader fieldNames={{ label: 'name', value: 'id' }}
+                            options={options} onChange={onChange} placeholder="请选择分类" />
                     </ProForm.Item>
 
                     <ProFormText
@@ -176,7 +177,7 @@ const CreateOrEdit = (props: any) => {
                                 setCoverKey={setCoverKey}
                                 showUploadList={true}
                             >
-                                <Button style={{textAlign:"justify"}} icon={<UploadOutlined />}>点击上传商品主图</Button>
+                                <Button style={{ textAlign: "justify" }} icon={<UploadOutlined />}>点击上传商品主图</Button>
                             </AliyunOSSUpload>
                             {
                                 initialValues === undefined || !initialValues?.cover_url ? '' :
@@ -195,13 +196,18 @@ const CreateOrEdit = (props: any) => {
                             { required: true, message: '请输入商品详情', },
                         ]}
                     >
-                        {initialValues === undefined || !initialValues?.details ? '' :
+                        {initialValues?.details &&
                             <Editor
                                 setDetails={setDetails}
-                                content={initialValues === undefined ? '' : initialValues.details}
+                                content={initialValues.details}
                             />
                         }
-
+                        {!initialValues?.details &&
+                            <Editor
+                                setDetails={setDetails}
+                                content={''}
+                            />
+                        }
                     </ProForm.Item>
                 </ProForm>
             }

@@ -4,8 +4,8 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:59
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-11-13 15:45:16
- * @FilePath: /11.4react/antd_pro_shop_admins/ant-design-pro/src/locales/zh-CN/menu.ts
+ * @LastEditTime: 2022-01-19 16:45:20
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/locales/zh-CN/menu.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 export default {
@@ -63,6 +63,6 @@ export default {
   'menu.goods': '商品列表',
   'menu.category': '分类列表',
   'menu.order': '订单列表',
-  'menu.ceshi1': '测试页面1',
-  'menu.ceshi2': '测试页面2',
+  'menu.comment': '评价管理',
+  'menu.menus': '菜单管理',
 };

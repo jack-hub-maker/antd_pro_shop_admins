@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-18 15:35:52
+ * @LastEditTime: 2022-01-19 16:27:29
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/services/user.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -46,5 +46,5 @@ export async function updateUser(uid: any,data:any): Promise<any> {
 
 //用户头像
 export async function updateAvatar(data:any): Promise<any> {
-  return request.put(`/user/avatar`,{data});
+  return request.patch(`/user/avatar`,{data});
 }
