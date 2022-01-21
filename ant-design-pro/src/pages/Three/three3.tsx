@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2022-01-20 17:24:22
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-21 11:10:02
+ * @LastEditTime: 2022-01-21 11:25:33
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Three/three3.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
@@ -33,7 +33,7 @@ const three = () => {
         init()
     }, [])
     return (
-        <div id="webgl-output" style={{ width: '100%', height: '100%', overflow: 'hidden' }}>1</div>
+        <div id="webgl-output" style={{ width: '100%', height: '100%', overflow: 'hidden' }}>3</div>
     )
 }
 
