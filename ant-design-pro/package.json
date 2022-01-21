@@ -72,6 +72,7 @@
     "react-dom": "^17.0.0",
     "react-helmet-async": "^1.0.4",
     "react-resizable": "^3.0.4",
+    "three": "^0.136.0",
     "umi": "^3.4.1",
     "umi-request": "^1.0.8"
   },

@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-11 20:55:46
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 16:47:54
+ * @LastEditTime: 2022-01-20 15:18:08
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/config/routes.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -80,6 +80,45 @@ export default [
                 name: 'menus',
                 icon: 'ShoppingOutlined',
                 component: '@/pages/Menus/menus.tsx',
+              },
+              //three.js 3d页面
+              // {
+              //   path: '/three',
+              //   name: 'three',
+              //   icon: 'UserOutlined',
+              //   component: '@/pages/Three/three.tsx',
+              // },
+              {
+                path: '/three',
+                name: 'three',
+                icon: 'UserOutlined',
+               routes:[
+                {
+                  path: '/three/three1',
+                  name: 'three1',
+                  component: '@/pages/Three/three1.tsx',
+                },
+                {
+                  path: '/three/three2',
+                  name: 'three2',
+                  component: '@/pages/Three/three2.tsx',
+                },
+                {
+                  path: '/three/three3',
+                  name: 'three3',
+                  component: '@/pages/Three/three3.tsx',
+                },
+                {
+                  path: '/three/three4',
+                  name: 'three4',
+                  component: '@/pages/Three/three4.tsx',
+                },
+                {
+                  path: '/three/three5',
+                  name: 'three5',
+                  component: '@/pages/Three/three5.tsx',
+                },
+               ]
               },
               {
                 component: './404',

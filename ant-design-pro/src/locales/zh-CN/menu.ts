@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-12 09:56:59
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 16:45:20
+ * @LastEditTime: 2022-01-20 17:30:12
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/locales/zh-CN/menu.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -65,4 +65,10 @@ export default {
   'menu.order': '订单列表',
   'menu.comment': '评价管理',
   'menu.menus': '菜单管理',
+  'menu.three': '3d页面',
+  'menu.three.three1': '3d测试1',
+  'menu.three.three2': '3d测试2',
+  'menu.three.three3': '3d测试3',
+  'menu.three.three4': '3d测试4',
+  'menu.three.three5': '3d测试5',
 };
