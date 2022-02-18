@@ -1,7 +1,13 @@
 # antd-pro-v4
-React hook + ts的后台管理项目。个人学习项目，可在此基础上进行扩展
+使用React hook + UmiJS + Antd Pro V4框架实现的后台管理项目。个人学习项目，有需要的可在此基础上进行扩展。
 
-安装步骤
+后端接口使用的是融职教育的接口支持，地址：https://www.showdoc.com.cn/1207745568269674/6094279351627422
+
+本项目根据视频教学做了部分修改，原视频教学地址：https://www.bilibili.com/video/BV1i5411c7xp?p=1
+
+如果给到大家帮助的话，希望能帮忙点亮一下小星星，谢谢大家🙏
+
+**安装步骤**
 
 git clone https://github.com/jack-hub-maker/antd_pro_shop_admins.git     // 把项目下载到本地
 
