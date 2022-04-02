@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2022-04-01 17:18:36
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-04-02 10:14:16
+ * @LastEditTime: 2022-04-02 16:33:19
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/FontHighLight/high1.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
@@ -19,13 +19,10 @@ const high1 = () => {
     const seachWay = (e: any) => {
         console.log(e.target.value);
         setsearchConnect([e.target.value])
-        console.log('999');
-        
         return
     }
     return (
         <div>
-            <span>2</span>
             <Input
                 value={searchConnect}
                 onChange={(a) => { seachWay(a) }}
