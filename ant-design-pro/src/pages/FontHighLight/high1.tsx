@@ -4,11 +4,7 @@
  * @Author: 
  * @Date: 2022-04-01 17:18:36
  * @LastEditors: YingJie Xing
-<<<<<<< Updated upstream
- * @LastEditTime: 2022-04-02 16:31:45
-=======
  * @LastEditTime: 2022-04-02 10:14:16
->>>>>>> Stashed changes
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/FontHighLight/high1.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
