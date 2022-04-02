@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2022-04-01 17:18:36
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-04-02 09:48:59
+ * @LastEditTime: 2022-04-02 16:25:21
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/FontHighLight/high1.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
@@ -20,7 +20,8 @@ const high1 = () => {
         console.log(e.target.value);
         setsearchConnect([e.target.value])
         // setsearchConnect(['j'])
-
+        console.log('666');
+        
         return
     }
     return (
