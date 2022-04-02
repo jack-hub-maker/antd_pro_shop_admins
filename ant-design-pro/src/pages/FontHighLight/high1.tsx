@@ -4,7 +4,11 @@
  * @Author: 
  * @Date: 2022-04-01 17:18:36
  * @LastEditors: YingJie Xing
+<<<<<<< Updated upstream
  * @LastEditTime: 2022-04-02 16:25:21
+=======
+ * @LastEditTime: 2022-04-02 10:14:16
+>>>>>>> Stashed changes
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/FontHighLight/high1.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
@@ -44,7 +48,7 @@ const high1 = () => {
                 searchWords={searchConnect} //搜索词数组。除非autoEscape为真，否则字符串搜索词会自动转换为正则表达式。
                 autoEscape={true} //关键词中在正则表达式中有意义的转义字符
                 textToHighlight="牛的啊 啊，The dog is chasing the cat. Or perhaps they're just playing?"
-            />,
+            />
         </div>
     )
 }
