@@ -4,7 +4,7 @@
  * @Author: 
  * @Date: 2021-10-11 20:55:46
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-20 15:18:08
+ * @LastEditTime: 2022-04-01 17:17:34
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/config/routes.ts
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
@@ -81,13 +81,7 @@ export default [
                 icon: 'ShoppingOutlined',
                 component: '@/pages/Menus/menus.tsx',
               },
-              //three.js 3d页面
-              // {
-              //   path: '/three',
-              //   name: 'three',
-              //   icon: 'UserOutlined',
-              //   component: '@/pages/Three/three.tsx',
-              // },
+              //3d测试
               {
                 path: '/three',
                 name: 'three',
@@ -119,6 +113,23 @@ export default [
                   component: '@/pages/Three/three5.tsx',
                 },
                ]
+              },
+              {
+                path: '/fontHighLight',
+                name: 'fontHighLight',
+                icon: 'UserOutlined',
+               routes:[
+                {
+                  path: '/fontHighLight/high1',
+                  name: 'high1',
+                  component: '@/pages/FontHighLight/high1.tsx',
+                },
+                {
+                  path: '/fontHighLight/high2',
+                  name: 'high2',
+                  component: '@/pages/FontHighLight/high2.tsx',
+                },
+              ]
               },
               {
                 component: './404',
