@@ -5,7 +5,7 @@
  * @Date: 2022-04-01 17:18:36
  * @LastEditors: YingJie Xing
 <<<<<<< Updated upstream
- * @LastEditTime: 2022-04-02 16:25:21
+ * @LastEditTime: 2022-04-02 16:31:45
 =======
  * @LastEditTime: 2022-04-02 10:14:16
 >>>>>>> Stashed changes
@@ -23,24 +23,17 @@ const high1 = () => {
     const seachWay = (e: any) => {
         console.log(e.target.value);
         setsearchConnect([e.target.value])
-        // setsearchConnect(['j'])
-        console.log('666');
+        console.log('999');
         
         return
     }
     return (
         <div>
+            <span>2</span>
             <Input
                 value={searchConnect}
                 onChange={(a) => { seachWay(a) }}
             />
-            {/* <MyButton
-                text="编研"
-                fileProps={{
-                    type: 'link',
-                    onClick: (e) => { seachWay(e) }
-                }}
-            /> */}
             <Highlighter
                 highlightClassName="YourHighlightClass" //样式
                 // searchWords={["and", "or", "the"]}
