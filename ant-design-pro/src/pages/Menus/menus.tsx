@@ -4,12 +4,11 @@
  * @Author: 
  * @Date: 2021-11-13 15:44:10
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 17:22:48
+ * @LastEditTime: 2022-04-11 16:18:10
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Menus/menus.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
-import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { Tag, Card, Form, Modal, Button, Avatar, Switch, message, Space } from 'antd';
 import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
@@ -103,7 +102,7 @@ const Menus = () => {
     }
 
     return (
-        <PageContainer>
+        <div>
             <Card>
             <MyProTable
                   fileProps={{
@@ -118,7 +117,7 @@ const Menus = () => {
                   }}
             />
             </Card>
-        </PageContainer>
+        </div>
     )
 }
 

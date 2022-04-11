@@ -4,12 +4,11 @@
  * @Author: 
  * @Date: 2021-10-13 14:50:45
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2021-10-13 19:34:42
- * @FilePath: \antd_pro_shop_admins\ant-design-pro\src\pages\DashBoard\index.tsx
+ * @LastEditTime: 2022-04-11 16:17:26
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/DashBoard/index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect } from 'react'
-import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Row, Col } from 'antd';
 import { ArrowUpOutlined, ArrowDownOutlined, RightOutlined, EllipsisOutlined } from '@ant-design/icons';
 import { fetchDashboard } from '@/services/dashboard'
@@ -42,7 +41,7 @@ const DashBoard = () => {
     }
 
     return (
-        <PageContainer>
+        <div>
             <Card>
                 <Row gutter={16}>
                     <Col span={8}>
@@ -211,7 +210,7 @@ const DashBoard = () => {
                     </ProCard>
                 </RcResizeObserver>
             </Card>
-        </PageContainer>
+        </div>
     )
 }
 

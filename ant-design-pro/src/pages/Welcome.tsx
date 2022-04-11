@@ -1,5 +1,14 @@
+/*
+ * @Descripttion: 
+ * @version: 1.0
+ * @Author: 
+ * @Date: 2022-04-01 17:08:00
+ * @LastEditors: YingJie Xing
+ * @LastEditTime: 2022-04-11 16:16:19
+ * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Welcome.tsx
+ * Copyright 2022 YingJie Xing, All Rights Reserved. 
+ */
 import React from 'react';
-import { PageContainer } from '@ant-design/pro-layout';
 import { Card, Alert, Typography } from 'antd';
 import { useIntl, FormattedMessage } from 'umi';
 import styles from './Welcome.less';
@@ -15,7 +24,6 @@ const CodePreview: React.FC = ({ children }) => (
 export default (): React.ReactNode => {
   const intl = useIntl();
   return (
-    <PageContainer>
       <Card>
         <Alert
           message={intl.formatMessage({
@@ -58,6 +66,6 @@ export default (): React.ReactNode => {
         </Typography.Text>
         <CodePreview>yarn add @ant-design/pro-layout</CodePreview>
       </Card>
-    </PageContainer>
+  
   );
 };

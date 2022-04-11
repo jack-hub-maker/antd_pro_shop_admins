@@ -3,13 +3,13 @@
  *
  * @see You can view component api by: https://github.com/ant-design/ant-design-pro-layout
  */
- import type {
+import type {
   MenuDataItem,
   BasicLayoutProps as ProLayoutProps,
   Settings,
 } from '@ant-design/pro-layout';
 import ProLayout, { DefaultFooter } from '@ant-design/pro-layout';
-import React, { useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import type { Dispatch } from 'umi';
 import { Link, useIntl, connect, history } from 'umi';
 import { GithubOutlined } from '@ant-design/icons';
@@ -19,6 +19,7 @@ import RightContent from '@/components/GlobalHeader/RightContent';
 import type { ConnectState } from '@/models/connect';
 import { getMatchMenu } from '@umijs/route-utils';
 import logo from '../assets/icon1.png';
+import RightTabs from './RightTabs';
 
 const noMatch = (
   <Result
@@ -72,6 +73,8 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   } = props;
 
   const menuDataRef = useRef<MenuDataItem[]>([]);
+  
+  const [jumpPage] = useState('/dashboard');
 
   useEffect(() => {
     if (dispatch) {
@@ -151,9 +154,12 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
         fontColor: 'rgba(24,144,255,0.15)',
       }}
     >
-      <Authorized authority={authorized!.authority} noMatch={noMatch}>
+      {/* <Authorized authority={authorized!.authority} noMatch={noMatch}>
         {children}
-      </Authorized>
+      </Authorized> */}
+
+      <RightTabs {...props} homePage={jumpPage || '/dashboard'} />
+
     </ProLayout>
   );
 };

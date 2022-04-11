@@ -4,12 +4,11 @@
  * @Author: 
  * @Date: 2021-11-13 15:43:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-19 17:13:54
+ * @LastEditTime: 2022-04-11 16:16:48
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Comment/comment.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
 import React, { useState, useEffect, useRef } from 'react'
-import { PageContainer } from '@ant-design/pro-layout';
 import ProForm, { ProFormText } from '@ant-design/pro-form';
 import { Tag, Card, Form, Modal, Button, Avatar, Switch, message, Space } from 'antd';
 import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
@@ -118,7 +117,6 @@ const Comment = () => {
     }
 
     return (
-        <PageContainer>
             <Card>
                 {/* <ProTable<GithubIssueItem>
                     columns={columns}
@@ -148,7 +146,6 @@ const Comment = () => {
                   }}
             />
             </Card>
-        </PageContainer>
     )
 }
 
