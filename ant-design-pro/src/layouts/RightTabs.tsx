@@ -20,7 +20,7 @@ interface IProps {
   menuNameObj?: any;
 }
 const RightTabbs = (props: IProps) => {
-  console.log('props-1:', props);
+  // console.log('props-1:', props);
   useEffect(() => {
     // 数据处理
     const ac = routesToTile().map((item: { name: any; path?: any, chineseName?: any }) => {
@@ -29,12 +29,12 @@ const RightTabbs = (props: IProps) => {
         value: item.chineseName,
       };
     });
-    console.log('ac:', ac);
+    // console.log('ac:', ac);
     const ab = new Map();
     ac.forEach((item: { label: any; value: any }) => {
       ab.set(item.label, item.value);
     });
-    console.log('cccc:', Object.fromEntries(ab));
+    // console.log('cccc:', Object.fromEntries(ab));
 
     seRrightTabData(Object.fromEntries(ab))
   }, []);
@@ -213,7 +213,7 @@ const RightTabbs = (props: IProps) => {
         {Object.keys(rightTabData).length > 0 &&
           routeTabs.map((item) => {
             const { tab, key, content: Content, path, exact } = routeTabsList[item];
-            console.log('path', path);
+            // console.log('path', path);
             return (
               <React.Fragment key={key}>
                 <TabPane

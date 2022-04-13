@@ -4,18 +4,30 @@
  * @Author: 
  * @Date: 2022-04-01 17:18:41
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-04-01 17:18:41
+ * @LastEditTime: 2022-04-13 13:58:01
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/FontHighLight/high2.tsx
  * Copyright 2022 YingJie Xing, All Rights Reserved. 
  */
-import React from 'react'
+import React, { useContext } from 'react'
+import Father from './components/high2Utils'
 
-const high2 = () => {
+export const ColorContext = React.createContext<any>('')
+
+const App = () => {
+
+    // const Child = () => {
+    //     const color = useContext(ColorContext)
+    //     return (
+    //       <div style={{ backgroundColor: color }}>Background color is: { color }</div>
+    //     )
+    //   }
+
     return (
-        <div>
-            222
-        </div>
+        <ColorContext.Provider value='#1890ff'>
+            <Father />
+        </ColorContext.Provider>
     )
 }
 
-export default high2
+export default App
+

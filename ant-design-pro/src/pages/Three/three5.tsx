@@ -1,21 +1,42 @@
-/*
- * @Descripttion: 
- * @version: 1.0
- * @Author: 
- * @Date: 2022-01-20 15:07:49
- * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-01-20 17:30:46
- * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Three/three5.tsx
- * Copyright 2022 YingJie Xing, All Rights Reserved. 
- */
-import React from 'react'
+import React, { Component } from 'react';
+import emitter from '@/utils/events';
 
-const three5 = () => {
-    return (
-        <div>
-            5
-        </div>
-    )
+class List extends Component {
+    eventEmitter: any;
+    constructor(props: any) {
+        super(props);
+    }
+    state={
+        message: 'List1',
+    }
+    componentDidMount() {
+        // 组件装载完成以后声明一个自定义事件
+        this.eventEmitter = emitter.addListener('changeMessage', (message) => {
+            this.setState({
+                message,
+            });
+        });
+        // this.eventEmitter = emitter.addListener('reset', (message) => {
+        //     this.setState({
+        //         message,
+        //     });
+        // });
+        emitter.on('reset', (message) => {
+            this.setState({ message, });
+        })
+    }
+    componentWillUnmount() {
+        emitter.removeListener('changeMessage', this.eventEmitter);
+        emitter.removeListener('reset', this.eventEmitter);
+    }
+    render() {
+        return (
+            <div>
+                {this.state.message}
+            </div>
+        );
+    }
 }
 
-export default three5
+export default List;
+

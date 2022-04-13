@@ -4,18 +4,16 @@
  * @Author: 
  * @Date: 2021-10-18 10:59:48
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-04-11 16:16:32
+ * @LastEditTime: 2022-04-11 17:08:44
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Category/index.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
-import React, { useState, useEffect, useRef } from 'react'
-import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Card, Form, Modal, Button, Avatar, Switch, message } from 'antd';
-import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
+import { useState, useRef } from 'react'
+import { Card, Button, Switch, message } from 'antd';
+import { PlusOutlined, } from '@ant-design/icons';
 import ProTable from '@ant-design/pro-table';
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
-import { getUsers, lockUser } from '@/services/user'
-import { getCategory ,isStatus} from '@/services/category'
+import { getCategory, isStatus } from '@/services/category'
 // import Create from './components/Create'
 import CreateOrEdit from './components/CreateOrEdit'
 type GithubIssueItem = {
@@ -79,8 +77,8 @@ const index = () => {
             ],
         },
     ];
-       //禁用分类
-       const handleIsStatus = async (record: any) => {
+    //禁用分类
+    const handleIsStatus = async (record: any) => {
         const res = await isStatus(record.id)
         //console.log(res);
         if (res.status === undefined) {
@@ -89,8 +87,8 @@ const index = () => {
     }
     //控制模态框显示隐藏
     const isShowModal = (show: boolean, editId: any) => {
-        console.log('点击到editId:',editId);
-        
+        console.log('点击到editId:', editId);
+
         setEditId(editId)
         setIsModalVisible(show)
     }
@@ -110,42 +108,42 @@ const index = () => {
     }
 
     return (
-            <Card>
-                <ProTable<GithubIssueItem>
-                    columns={columns}
-                    actionRef={actionRef}
-                    request={(params, sort, filter) => getData(params)}
-                    rowKey="id"
-                    // expandable={{
-                    //     expandedRowRender: record => <p style={{ margin: 0 }}>{'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'}</p>,
-                    //     rowExpandable: record => record.name !== 'Not Expandable',
-                    //   }}
-                    pagination={{
-                        pageSize: 10,
-                    }}
-                    search={false}
-                    dateFormatter="string"
-                    headerTitle="分类列表"
-                    toolBarRender={() => [
-                        <Button key="button"
-                            icon={<PlusOutlined />}
-                            type="primary"
-                            onClick={() => isShowModal(true,null)}>
-                            新建分类
-                        </Button>
-                    ]}
-                />
+        <Card>
+            <ProTable<GithubIssueItem>
+                columns={columns}
+                actionRef={actionRef}
+                request={(params, sort, filter) => getData(params)}
+                rowKey="id"
+                // expandable={{
+                //     expandedRowRender: record => <p style={{ margin: 0 }}>{'My name is Joe Black, I am 32 years old, living in Sidney No. 1 Lake Park.'}</p>,
+                //     rowExpandable: record => record.name !== 'Not Expandable',
+                //   }}
+                pagination={{
+                    pageSize: 10,
+                }}
+                search={false}
+                dateFormatter="string"
+                headerTitle="分类列表"
+                toolBarRender={() => [
+                    <Button key="button"
+                        icon={<PlusOutlined />}
+                        type="primary"
+                        onClick={() => isShowModal(true, null)}>
+                        新建分类
+                    </Button>
+                ]}
+            />
 
-                {!isModalVisible ? '' :
-                    <CreateOrEdit
-                        isModalVisible={isModalVisible}
-                        isShowModal={isShowModal}
-                        actionRef={actionRef}
-                        editId={editId}
-                    />
-                }
-            </Card>
-    
+            {!isModalVisible ? '' :
+                <CreateOrEdit
+                    isModalVisible={isModalVisible}
+                    isShowModal={isShowModal}
+                    actionRef={actionRef}
+                    editId={editId}
+                />
+            }
+        </Card>
+
     )
 }
 

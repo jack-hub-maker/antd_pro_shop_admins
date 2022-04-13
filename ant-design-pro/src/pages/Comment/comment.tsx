@@ -4,18 +4,16 @@
  * @Author: 
  * @Date: 2021-11-13 15:43:49
  * @LastEditors: YingJie Xing
- * @LastEditTime: 2022-04-11 16:16:48
+ * @LastEditTime: 2022-04-11 17:09:08
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/src/pages/Comment/comment.tsx
  * Copyright 2021 YingJie Xing, All Rights Reserved. 
  */
-import React, { useState, useEffect, useRef } from 'react'
-import ProForm, { ProFormText } from '@ant-design/pro-form';
-import { Tag, Card, Form, Modal, Button, Avatar, Switch, message, Space } from 'antd';
-import { PlusOutlined, EllipsisOutlined, UserOutlined } from '@ant-design/icons';
-import ProTable from '@ant-design/pro-table';
+import { useState, useRef } from 'react'
+import { Card } from 'antd';
+
 import type { ProColumns, ActionType } from '@ant-design/pro-table';
 import { getComment } from '@/services/comment'
-import { MyButton, OptionButton,MyProTable } from '@/components/myComponents';
+import { MyButton, OptionButton, MyProTable } from '@/components/myComponents';
 type GithubIssueItem = {
     url: string;
     id: number;
@@ -35,7 +33,7 @@ type GithubIssueItem = {
 const Comment = () => {
     const actionRef = useRef<ActionType>();
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
+
     const [isOpenVisible, setIsOpenVisible] = useState(false);
     const [chooseRecord, setchooseRecord] = useState({});
 
@@ -117,8 +115,8 @@ const Comment = () => {
     }
 
     return (
-            <Card>
-                {/* <ProTable<GithubIssueItem>
+        <Card>
+            {/* <ProTable<GithubIssueItem>
                     columns={columns}
                     actionRef={actionRef}
                     request={(params, sort, filter) => getData(params)}
@@ -134,18 +132,18 @@ const Comment = () => {
                     toolBarRender={() => []}
                 /> */}
             <MyProTable
-                  fileProps={{
+                fileProps={{
                     // bordered: true,
                     actionRef,
-                    headerTitle:'评价列表',
+                    headerTitle: '评价列表',
                     request: (params) => getData(params),
                     columns,
                     search: {
                         labelWidth: 'auto',
                     },
-                  }}
+                }}
             />
-            </Card>
+        </Card>
     )
 }
 
