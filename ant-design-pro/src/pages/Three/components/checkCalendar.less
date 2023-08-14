@@ -1,0 +1,148 @@
+.calendar-mask {
+    // position: fixed;
+    // margin-left: 12%;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    .calendar-wrap {
+        width: 100%;
+        height: 100%;
+        background-color: #ffffff;
+        overflow: auto;
+        animation-duration: .3s;
+
+        .header {
+            color: black;
+            font-size: 17px;
+            font-weight: bold;
+            height: 30px;
+            line-height: 30px;
+
+            .exit {
+                width: 20px;
+                height: 20px;
+                position: relative;
+                float: left;
+                left: 20px;
+                top: 5px;
+            }
+
+            .exit::before,
+            .exit::after {
+                content: "";
+                position: absolute;
+                height: 20px;
+                width: 1.5px;
+                left: 8.5px;
+                background: #098fef;
+            }
+
+            .exit::before {
+                transform: rotate(45deg);
+            }
+
+            .exit::after {
+                transform: rotate(-45deg);
+            }
+
+        }
+
+        .week-wrap {
+            display: flex;
+            font-size: 16px;
+            border-bottom: 1px solid rgb(221, 221, 221);
+            .week-item {
+                margin-top: 30px;
+                height: 50px;
+                line-height: 30px;
+                width: 14.28571429%;
+            }
+        }
+
+        .date-table {
+            margin-top: 20px;
+
+            .desc {
+                text-align: left;
+                text-indent: 12px;
+                font-size: 18px;
+            }
+
+            .row {
+                display: flex;
+                margin: 8px 0px;
+
+                .date-wrap {
+                    height: 35px;
+                    width: 14.28571429%;
+                    line-height: 30px;
+
+                    .left {
+                        width: 100%;
+                    }
+
+                    .item {
+                        display: inline-block;
+                        width: 35px;
+                        height: 35px;
+                        font-size: 15px;
+                        font-weight: bold;
+                        line-height: 35px;
+                        border-radius: 50%;
+                        text-align: center;
+                    }
+
+                    .disable {
+                        background-color: rgb(238, 238, 238);
+                        color: rgb(187, 187, 187);
+                    }
+
+                    .active {
+                        background-color: #108ee9;
+                        color: #ffffff;
+                    }
+
+                    .right {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+
+        .fake-area {
+            height: 53px;
+            width: 100%;
+        }
+    }
+
+    .confirm-wrap {
+        position: fixed;
+        bottom: 0;
+        height: 54px;
+        // width: 100%;
+        width: calc(100% - 335px);
+        box-sizing: border-box;
+        // border-top: 1px solid rgb(221, 221, 221);
+        // background-color: rgb(247, 247, 247);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        .confirm {
+            border-radius: 5px;
+            margin: 0 5px;
+            background-color: #108ee9;
+            font-size: 18px;
+            color: #ffffff;
+            padding: 3px 4px;
+
+            &:active {
+                background-color: rgb(14, 128, 210);
+                color: rgb(85, 166, 223)
+            }
+        }
+    }
+}

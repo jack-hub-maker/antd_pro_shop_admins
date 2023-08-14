@@ -1,12 +1,12 @@
 ﻿/*
- * @Descripttion: 
+ * @Descripttion:
  * @version: 1.0
- * @Author: 
+ * @Author:
  * @Date: 2021-10-11 20:55:46
  * @LastEditors: YingJie Xing
  * @LastEditTime: 2022-04-11 15:54:06
  * @FilePath: /antd_pro_shop_admins/ant-design-pro/config/routes.ts
- * Copyright 2021 YingJie Xing, All Rights Reserved. 
+ * Copyright 2021 YingJie Xing, All Rights Reserved.
  */
 export default [
   {
@@ -35,7 +35,7 @@ export default [
             routes: [
               {
                 path: '/',
-                redirect: '/dashboard'
+                redirect: '/dashboard',
               },
               {
                 path: '/dashboard',
@@ -88,6 +88,33 @@ export default [
                 component: '@/pages/Menus/menus.tsx',
                 chineseName: '菜单管理',
               },
+              //其他demo测试
+              {
+                path: '/HooksReact',
+                name: 'HooksReact',
+                icon: 'UserOutlined',
+                chineseName: '其他测试',
+                routes: [
+                  {
+                    path: '/HooksReact/demo1',
+                    name: 'demo1',
+                    component: '@/pages/HooksReact/demo1.tsx',
+                    chineseName: '其他测试1',
+                  },
+                  {
+                    path: '/HooksReact/demo2',
+                    name: 'demo2',
+                    component: '@/pages/HooksReact/demo2.tsx',
+                    chineseName: '其他测试2',
+                  },
+                  {
+                    path: '/HooksReact/demo3',
+                    name: 'demo3',
+                    component: '@/pages/HooksReact/demo3.tsx',
+                    chineseName: 'calendar测试',
+                  },
+                ],
+              },
               //3d测试
               {
                 path: '/three',
@@ -125,7 +152,43 @@ export default [
                     component: '@/pages/Three/three5.tsx',
                     chineseName: '3d测试5',
                   },
-                ]
+                  {
+                    path: '/three/three6',
+                    name: 'three6',
+                    component: '@/pages/Three/three6.tsx',
+                    chineseName: '3d测试6',
+                  },
+                  {
+                    path: '/three/three7',
+                    name: 'three7',
+                    component: '@/pages/Three/three7.tsx',
+                    chineseName: '3d测试7',
+                  },
+                  {
+                    path: '/three/three8',
+                    name: 'three8',
+                    component: '@/pages/Three/three8.tsx',
+                    chineseName: '测试8',
+                  },
+                  {
+                    path: '/three/three9',
+                    name: 'three9',
+                    component: '@/pages/Three/three9.tsx',
+                    chineseName: '测试9',
+                  },
+                  {
+                    path: '/three/moveModal',
+                    name: 'moveModal',
+                    component: '@/pages/Three/moveModal',
+                    chineseName: '测试moveModal',
+                  },
+                  {
+                    path: '/three/Hoc',
+                    name: 'Hoc',
+                    component: '@/pages/Three/Hoc',
+                    chineseName: '测试Hoc',
+                  },
+                ],
               },
               {
                 path: '/fontHighLight',
@@ -145,7 +208,7 @@ export default [
                     component: '@/pages/FontHighLight/high2.tsx',
                     chineseName: '关键词高亮2',
                   },
-                ]
+                ],
               },
               {
                 component: './404',

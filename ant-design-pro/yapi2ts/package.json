@@ -1,0 +1,21 @@
+{
+  "name": "yapi2ts",
+  "version": "0.0.3",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "0.26.1",
+    "change-case": "^4.1.2",
+    "consola": "^2.15.3",
+    "dayjs": "^1.11.5",
+    "json-schema-to-typescript": "^11.0.2",
+    "lodash": "^4.17.21",
+    "ora": "5.4.1",
+    "prettier": "^2.2.1",
+    "to-json-schema": "^0.2.5"
+  }
+}

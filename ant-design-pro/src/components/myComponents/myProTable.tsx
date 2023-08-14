@@ -64,6 +64,7 @@ interface UseTableProps {
 const ResizeableTitle = (resizeProps: { [x: string]: any; cresize: any; width: any }) => {
   const { cresize, width, isResizable, ...restProps } = resizeProps;
   delete restProps.cresize;
+  console.log('width:', width);
 
   if (!width) {
     return <th {...restProps} />;
@@ -178,7 +179,7 @@ const MyProTable = (props: UseTableProps) => {
           columnsWidthObj.current = data;
           setColumnsWidth(data);
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       });
     }

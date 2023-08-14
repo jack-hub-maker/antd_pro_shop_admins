@@ -1,0 +1,90 @@
+.pieChartWrap {
+  position: relative;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  // min-width: 200px;
+  // min-height: 200px;
+  // padding-left: 14px;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+.title {
+  position: absolute;
+  top: 0;
+  left: 30px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 500;
+  font-size: 16px;
+  font-family: PingFangSC-Medium;
+  line-height: 24px;
+  white-space: nowrap;
+  text-align: left;
+  // transform: translateX(-50%);
+}
+.chart {
+  position: relative;
+  top: 10px;
+  // width: 15vw;
+  left: -10px;
+  flex: none;
+  width: 200px;
+  height: 200px;
+  // margin-right: 120px;
+}
+
+.legendWrap {
+  display: flex;
+  flex: auto;
+  flex-flow: row nowrap;
+}
+
+.subItems {
+  display: flex;
+  flex-flow: column;
+  &:first-child {
+    margin-right: 0px;
+  }
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1px;
+  color: rgba(0, 0, 0, 0.85);
+  font-weight: 400;
+  font-size: 14px;
+  font-family: PingFangSC-Regular;
+  line-height: 22px;
+  white-space: nowrap;
+  &:last-child {
+    margin-bottom: 0;
+  }
+  .dot {
+    width: 12px;
+    height: 12px;
+    margin-right: 16px;
+  }
+  .itemTitle {
+    margin-right: 5px;
+  }
+  .num {
+    margin-right: 5px;
+  }
+  .rate {
+  }
+}
+
+.tooltip {
+  z-index: 9999;
+  width: 100px;
+  height: 100px;
+  .title {
+  }
+}
+
+:global {
+  .ant-card-body {
+    padding: 0px !important;
+  }
+}
