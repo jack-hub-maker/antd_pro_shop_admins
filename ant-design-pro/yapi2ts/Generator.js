@@ -117,10 +117,10 @@ class Generator {
         // Swagger 时总是禁用标签、更新时间、链接
         ...(syntheticalConfig.serverType === 'swagger'
           ? {
-              tag: false,
-              updateTime: false,
-              link: false,
-            }
+            tag: false,
+            updateTime: false,
+            link: false,
+          }
           : {}),
       };
       if (!isEnabled) {
@@ -150,7 +150,7 @@ class Generator {
           value: process.env.JEST_WORKER_ID // 测试时使用 unix 时间戳
             ? String(extendedInterfaceInfo.up_time)
             : /* istanbul ignore next */
-              `\`${dayjs(extendedInterfaceInfo.up_time * 1000).format('YYYY-MM-DD HH:mm:ss')}\``,
+            `\`${dayjs(extendedInterfaceInfo.up_time * 1000).format('YYYY-MM-DD HH:mm:ss')}\``,
         },
       ];
       if (typeof extraTags === 'function') {
@@ -205,6 +205,9 @@ class Generator {
     }
     const { cwd } = this.options;
     const categoryList = await getCategoryList({ serverUrl, token, pid });
+    if (categoryList.length === 1) {
+      throw new Error('查询数据为空，请检查ids和token等配置是否正确');
+    }
     // console.log('categoryList:', categoryList);
     const syntheticalConfig = this.config;
     const interfaceList = ids.map((id) => {
