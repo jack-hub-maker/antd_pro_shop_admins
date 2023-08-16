@@ -74,4 +74,7 @@ export default {
   'menu.fontHighLight': '高亮页面',
   'menu.fontHighLight.high1': '关键词高亮1',
   'menu.fontHighLight.high2': '关键词高亮2',
+  'menu.driver': 'driver页面',
+  'menu.driver.demo1': 'driver1',
+  'menu.driver.demo2': 'driver2',
 };

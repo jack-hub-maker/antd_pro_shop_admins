@@ -210,6 +210,26 @@ export default [
                   },
                 ],
               },
+                 {
+                path: '/driver',
+                name: 'driver',
+                icon: 'UserOutlined',
+                chineseName: 'driver页面',
+                routes: [
+                  {
+                    path: '/driver/driver1',
+                    name: 'driver1',
+                    component: '@/pages/driver/driver1.tsx',
+                    chineseName: 'driver1',
+                  },
+                  {
+                    path: '/driver/driver2',
+                    name: 'driver2',
+                    component: '@/pages/driver/driver2.tsx',
+                    chineseName: 'driver2',
+                  },
+                ],
+              },
               {
                 component: './404',
               },
