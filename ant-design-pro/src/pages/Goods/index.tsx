@@ -161,7 +161,7 @@ const index = () => {
         return {
             // 取response的records部分为列表数组数据
             data: response.data,
-            // success 请返回 true，
+            // success 请返回 true
             // 不然 table 会停止解析数据，即使有数据
             success: true,
             // 不传会使用 data 的长度，如果是分页一定要传

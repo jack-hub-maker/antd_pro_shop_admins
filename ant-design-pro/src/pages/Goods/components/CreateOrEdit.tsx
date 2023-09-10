@@ -13,7 +13,6 @@ import ProForm, { ProFormText, ProFormTextArea, ProFormDigit, ProFormUploadButto
 import { Form, Image, Modal, Upload, message, Skeleton, Cascader, Button } from 'antd';
 import { getCategory } from '@/services/category'
 import { addGoods, showGoods, updateGoods } from '@/services/goods'
-import { FormInstance } from 'antd/es/form'
 import { UploadOutlined } from '@ant-design/icons';
 import AliyunOSSUpload from '@/components/AliyunOSSUpload'
 import Editor from '@/components/Editor'
@@ -24,7 +23,6 @@ const CreateOrEdit = (props: any) => {
     //定义form实例用来操作表单
     const [formObj] = ProForm.useForm()
     //设置表单的值
-    // formObj.setFieldsValue({ fieldName: 'value' })
     const { isModalVisible } = props
     const { isShowModal } = props
     const { actionRef } = props
@@ -34,7 +32,7 @@ const CreateOrEdit = (props: any) => {
     useEffect(() => {
         getCategorys()
         if (editId !== undefined) {
-            console.log('请求了');
+            console.log('请求了什么');
             getshowUser()
         }
     }, [editId])
