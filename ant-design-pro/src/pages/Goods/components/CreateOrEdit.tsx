@@ -39,8 +39,7 @@ const CreateOrEdit = (props: any) => {
     //发送请求，获取数据详情
     const getshowUser = (async () => {
         const res = await showGoods(editId)
-        console.log("res:", res);
-        console.log('formObj:::', formObj);
+        console.log("res2:", res);
         //更改表单数据的值
         const { pid, id } = res.category
         const defaultCategory = pid === 0 ? [id] : [pid, id]
