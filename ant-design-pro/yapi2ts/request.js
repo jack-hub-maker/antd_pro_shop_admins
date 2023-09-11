@@ -25,7 +25,7 @@ const getCategoryList = async ({ serverUrl, token, pid }) => {
     `${serverUrl}/api/open/plugin/export-full?type=json&pid=${pid}&status=all&token=${token}`,
     // `${serverUrl}/api/plugin/export?type=json&status=all&isWiki=false&token=${token}`
   );
-  console.log('categoryList:', categoryList);
+  // console.log('categoryList:', categoryList);
   return categoryList.map((cat) => {
     const projectId = cat.list?.[0]?.project_id || 0;
     const catId = cat.list?.[0]?.catid || 0;

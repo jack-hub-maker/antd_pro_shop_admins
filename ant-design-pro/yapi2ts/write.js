@@ -48,6 +48,8 @@ const write = async (outputFileList) => {
         fileType,
         outFileName,
       } = outputFileList[outputFilePath];
+      // console.log('syntheticalConfig: ', syntheticalConfig);
+
       const isApi = fileType === 'api';
       outFileName = outFileName.replace(/\.ts?$/, '');
 
@@ -114,7 +116,7 @@ const tsc = async (file) => {
         file,
       )}`,
       {
-        cwd: this.options.cwd,
+        cwd: this.options?.cwd,
         env: process.env,
       },
       () => resolve(),

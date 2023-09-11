@@ -1,5 +1,4 @@
-/* eslint-disable react/no-children-prop */
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, forwardRef, useImperativeHandle, useRef } from 'react';
 import { Tabs } from 'antd';
 import { history } from 'umi';
 import { Route } from 'dva/router';
@@ -19,24 +18,21 @@ interface IProps {
   route?: any;
   menuNameObj?: any;
 }
-const RightTabbs = (props: IProps) => {
-  // console.log('props-1:', props);
+const RightTabbs = forwardRef((props: IProps, ref: any) => {
+  const tabRef = useRef({});
   useEffect(() => {
     // 数据处理
-    const ac = routesToTile().map((item: { name: any; path?: any, chineseName?: any }) => {
+    const ac = routesToTile().map((item: { name: any; path?: any; chineseName?: any }) => {
       return {
         label: item.path,
         value: item.chineseName,
       };
     });
-    // console.log('ac:', ac);
     const ab = new Map();
     ac.forEach((item: { label: any; value: any }) => {
       ab.set(item.label, item.value);
     });
-    // console.log('cccc:', Object.fromEntries(ab));
-
-    seRrightTabData(Object.fromEntries(ab))
+    seRrightTabData(Object.fromEntries(ab));
   }, []);
 
   const tmps = {
@@ -45,8 +41,10 @@ const RightTabbs = (props: IProps) => {
     '/goods': '商品面板',
     '/category': '分类面板',
     '/order': '订单面板',
-  }
-  const [rightTabData, seRrightTabData] = useState<Object>({});//右侧菜单tab项
+  };
+  const [closeVisible, setCloseVisible] = useState<Boolean>(true); //是否有关闭按钮
+
+  const [rightTabData, seRrightTabData] = useState<Object>({}); //右侧菜单tab项
   const [activeKey, setActiveKey] = useState(props.homePage);
   // 路由tab页数据
   const [routeTabsList, setRouteTabsList] = useState({});
@@ -54,14 +52,35 @@ const RightTabbs = (props: IProps) => {
   // 全部路由path
   const allRoutePath = useRef<any>([]);
 
+  useImperativeHandle(ref, () => {
+    return {
+      onClose(key, callback) {
+        if (typeof key === 'function') {
+          callback = key;
+          key = location?.pathname;
+        }
+        tabRef.current[key] = callback;
+        return key;
+      },
+    };
+  });
+
   // 存储到session中
   const setStates = (
     routerList: React.SetStateAction<{}>,
     pathname: React.SetStateAction<string>,
   ) => {
+    console.log('routerList3: ', routerList);
+    console.log('pathname3: ', pathname);
     setRouteTabsList(routerList);
     setActiveKey(pathname);
     setRouteTabs(Object.keys(routerList));
+    console.log('Object.keys(routerList): ', Object.keys(routerList));
+    if (Object.keys(routerList).length === 1) {
+      setCloseVisible(false);
+    } else {
+      setCloseVisible(true);
+    }
     sessionStorage.setItem('AntTabs', JSON.stringify(Object.keys(routerList)));
   };
 
@@ -72,13 +91,13 @@ const RightTabbs = (props: IProps) => {
     } = props;
     //
     const newpathname = pathname === '/' ? props.homePage : pathname;
-    routeTabsList[props.homePage] = {
-      key: props.homePage,
-      tab: allRoutePath.current[props.homePage]?.name,
-      path: allRoutePath.current[props.homePage]?.path,
-      content: allRoutePath.current[props.homePage]?.content,
-      exact: allRoutePath.current[props.homePage]?.exact,
-    };
+    // routeTabsList[props.homePage] = {
+    //   key: props.homePage,
+    //   tab: allRoutePath.current[props.homePage]?.name,
+    //   path: allRoutePath.current[props.homePage]?.path,
+    //   content: allRoutePath.current[props.homePage]?.content,
+    //   exact: allRoutePath.current[props.homePage]?.exact,
+    // };
     // 如果有session路由  全部取出  (刷新页面执行)
     if (sessionRoutes) {
       sessionRoutes.forEach((item: string | number) => {
@@ -154,10 +173,15 @@ const RightTabbs = (props: IProps) => {
     history.push(key);
   };
 
-  const onEdit = (
-    key: string | React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>,
+  const onEdit = async (
+    // key: string | React.MouseEvent<Element, MouseEvent> | React.KeyboardEvent<Element>,
+    key: any,
     action: 'add' | 'remove',
   ) => {
+    const callback = tabRef.current[key];
+    if (typeof callback === 'function') {
+      await callback();
+    }
     const {
       location: { pathname },
     } = props;
@@ -165,13 +189,12 @@ const RightTabbs = (props: IProps) => {
       delete routeTabsList[key as string];
       const tabKeys = Object.keys(routeTabsList);
       const homePage = pathname !== key ? pathname : tabKeys[tabKeys.length - 1];
-
       setRouteTabs(tabKeys);
       history.push(homePage);
       setStates(routeTabsList, homePage);
     }
   };
-  const closeAllTabs = () => {
+  const closeAllTabs = async () => {
     // 关闭所有 保留默认页面
     const indexRoutes = {
       [props.homePage]: {
@@ -182,24 +205,48 @@ const RightTabbs = (props: IProps) => {
         exact: allRoutePath.current[props.homePage]?.exact,
       },
     };
+
     setActiveKey(props.homePage);
     history.push(props.homePage);
     setStates(indexRoutes, props.homePage);
   };
-
+  const closeOtherTabs = () => {
+    const indexRoutes = {
+      [activeKey]: {
+        key: activeKey,
+        tab: allRoutePath.current[activeKey]?.path,
+        path: allRoutePath.current[activeKey]?.path,
+        content: allRoutePath.current[activeKey]?.content,
+        exact: allRoutePath.current[activeKey]?.exact,
+      },
+    };
+    setActiveKey(activeKey);
+    history.push(activeKey);
+    setStates(indexRoutes, activeKey);
+  };
   return (
     <ProCard className="Tavsmain">
       <Tabs
         tabBarExtraContent={
           routeTabs.length > 5 && (
-            <MyButton
-              text="关闭全部"
-              fileProps={{
-                onClick: () => {
-                  closeAllTabs();
-                },
-              }}
-            />
+            <>
+              <MyButton
+                text="关闭全部"
+                fileProps={{
+                  onClick: () => {
+                    closeAllTabs();
+                  },
+                }}
+              />
+              <MyButton
+                text="关闭其他"
+                fileProps={{
+                  onClick: () => {
+                    closeOtherTabs();
+                  },
+                }}
+              />
+            </>
           )
         }
         className="mytabs"
@@ -209,23 +256,20 @@ const RightTabbs = (props: IProps) => {
         hideAdd
         onEdit={onEdit}
       >
-
         {Object.keys(rightTabData).length > 0 &&
           routeTabs.map((item) => {
             const { tab, key, content: Content, path, exact } = routeTabsList[item];
-            // console.log('path', path);
             return (
               <React.Fragment key={key}>
                 <TabPane
                   tab={rightTabData[path] || (path === props.homePage ? '首页' : '404')}
                   key={key}
-                  closable={key !== props.homePage}
+                  // closable={key !== props.homePage}
+                  closable={closeVisible}
                   style={{
                     overflow: 'auto',
-                    // height: 'calc(100vh - 180px)',
                   }}
                 >
-                  {/* <React.Fragment></React.Fragment> */}
                   <Route
                     key={tab}
                     path={path}
@@ -248,7 +292,7 @@ const RightTabbs = (props: IProps) => {
       </Tabs>
     </ProCard>
   );
-};
+});
 
 export default connect(({ menu }: ConnectState) => ({
   menuNameObj: menu.menuNameObj,

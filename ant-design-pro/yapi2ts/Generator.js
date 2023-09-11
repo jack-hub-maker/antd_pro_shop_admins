@@ -24,14 +24,14 @@ const defaultConfig = {
   },
   basePath: 'src/api/',
 };
-// console.log('config配置', config);
+console.log('config配置', config);
 class Generator {
   /** 配置 */
   config = config || {};
   disposes = [];
 
   constructor(config, options = { cwd: process.cwd() }) {
-    this.config = Object.assign(this.config, defaultConfig, config);
+    this.config = Object.assign(defaultConfig, this.config, config);
     this.options = options;
   }
   getChangeName = async (syntheticalConfig, extendedInterfaceInfo) => {

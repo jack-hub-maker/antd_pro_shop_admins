@@ -19,7 +19,14 @@ import type { ConnectState } from '@/models/connect';
 import { getMatchMenu } from '@umijs/route-utils';
 import logo from '../assets/icon1.png';
 import RightTabs from './RightTabs';
+import * as Sentry from '@sentry/react';
+import { Integrations } from '@sentry/tracing';
 
+Sentry.init({
+  dsn: 'https://54ce8fc77a3d4f7a03a5e30a746ae3d6@o4505723631632384.ingest.sentry.io/4505723633139712', // 将 YOUR_SENTRY_DSN 替换为你的 Sentry DSN
+  integrations: [new Integrations.BrowserTracing()],
+  tracesSampleRate: 1.0, // 采样率，0.0 到 1.0 之间的值
+});
 const noMatch = (
   <Result
     status={403}
@@ -72,7 +79,7 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
   } = props;
 
   const menuDataRef = useRef<MenuDataItem[]>([]);
-  
+
   const [jumpPage] = useState('/dashboard');
 
   useEffect(() => {
@@ -80,6 +87,16 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       dispatch({
         type: 'user/fetchCurrent',
       });
+    }
+    // 示例：模拟一个错误，并将其发送到 Sentry
+    try {
+      // 这里放置可能会抛出错误的代码
+      console.log(2);
+      throw new Error('This is a test error.');
+    } catch (error) {
+      // 捕获错误并发送到 Sentry
+      console.log(23);
+      Sentry.captureException(error);
     }
   }, []);
   /** Init variables */
@@ -158,7 +175,6 @@ const BasicLayout: React.FC<BasicLayoutProps> = (props) => {
       </Authorized> */}
 
       <RightTabs {...props} homePage={jumpPage || '/dashboard'} />
-
     </ProLayout>
   );
 };

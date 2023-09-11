@@ -1,6 +1,5 @@
 // https://umijs.org/config/
 import { defineConfig } from 'umi';
-
 export default defineConfig({
   plugins: [
     // https://github.com/zthxxx/react-dev-inspector
