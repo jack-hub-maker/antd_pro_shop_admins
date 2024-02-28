@@ -67,9 +67,10 @@ class Generator {
     const responseDataType = await jsonSchemaToType(responseDataJsonSchema, responseDataTypeName);
 
     const path = extendedInterfaceInfo.path.toLowerCase();
+
     const isImport = _.isFunction(syntheticalConfig?.getRequestDataTypeName)
       ? await syntheticalConfig?.isImport(extendedInterfaceInfo)
-      : path.indexOf('import') !== -1;
+      : path.indexOf('upload') !== -1;
 
     const isDownload = _.isFunction(syntheticalConfig?.getResponseDataTypeName)
       ? await syntheticalConfig?.isDownload(extendedInterfaceInfo)
